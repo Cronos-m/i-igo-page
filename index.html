@@ -1,0 +1,665 @@
+<!DOCTYPE html>
+<html lang="es" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mago Iñigo | Magia & Burbujas Gigantes</title>
+  <meta name="description" content="Espectáculos mágicos y sensoriales con burbujas gigantes para eventos familiares, infantiles y corporativos.">
+  
+  <!-- Tipografías de Alta Fidelidad -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <!-- SDK de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg-dark: #080612;
+      --bg-card: rgba(20, 16, 41, 0.75);
+      --neon-magenta: #ff007a;
+      --neon-cyan: #00f0ff;
+      --neon-gold: #ffb800;
+      --text-main: #f8fafc;
+      --text-muted: #94a3b8;
+      --border-glow: rgba(255, 0, 122, 0.25);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background-color: var(--bg-dark);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      overflow-x: hidden;
+      line-height: 1.6;
+    }
+
+    /* Canvas de Burbujas Interactivas */
+    #bubble-canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 1;
+      pointer-events: auto;
+    }
+
+    .content-wrapper {
+      position: relative;
+      z-index: 2;
+      pointer-events: none;
+    }
+
+    .content-wrapper *, .interactive {
+      pointer-events: auto;
+    }
+
+    /* Navbar */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      z-index: 100;
+      backdrop-filter: blur(16px);
+      background: rgba(8, 6, 18, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      font-weight: 900;
+      background: linear-gradient(135deg, #fff, var(--neon-cyan), var(--neon-magenta));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+    }
+
+    nav ul {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    nav a {
+      color: var(--text-main);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      transition: color 0.3s;
+    }
+
+    nav a:hover {
+      color: var(--neon-cyan);
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .btn-lang {
+      background: rgba(255, 255, 255, 0.08);
+      color: var(--text-main);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 0.4rem 0.9rem;
+      border-radius: 20px;
+      font-weight: 700;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: all 0.3s;
+    }
+
+    .btn-lang:hover {
+      border-color: var(--neon-cyan);
+      color: var(--neon-cyan);
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, var(--neon-magenta), #d946ef);
+      color: #fff;
+      padding: 0.75rem 1.8rem;
+      border-radius: 50px;
+      text-decoration: none;
+      font-weight: 700;
+      border: none;
+      cursor: pointer;
+      box-shadow: 0 0 25px rgba(255, 0, 122, 0.4);
+      transition: transform 0.3s, box-shadow 0.3s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 0 35px rgba(255, 0, 122, 0.6);
+    }
+
+    /* Hero Section */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 8rem 2rem 4rem;
+    }
+
+    .hero-badge {
+      background: rgba(0, 240, 255, 0.1);
+      border: 1px solid var(--neon-cyan);
+      padding: 0.4rem 1.2rem;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--neon-cyan);
+      margin-bottom: 1.5rem;
+      font-weight: 700;
+    }
+
+    .hero h1 {
+      font-family: 'Outfit', sans-serif;
+      font-size: clamp(2.8rem, 6vw, 5rem);
+      font-weight: 900;
+      line-height: 1.05;
+      margin-bottom: 1.5rem;
+      max-width: 900px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--neon-cyan), var(--neon-magenta), var(--neon-gold));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+      font-size: 1.25rem;
+      color: var(--text-muted);
+      max-width: 650px;
+      margin-bottom: 2.5rem;
+    }
+
+    /* Sections */
+    section {
+      padding: 6rem 2rem;
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-header h2 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 2.8rem;
+      font-weight: 800;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: var(--text-muted);
+      font-size: 1.1rem;
+    }
+
+    /* Shows Grid */
+    .shows-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+      gap: 2rem;
+    }
+
+    .show-card {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 28px;
+      padding: 2rem;
+      backdrop-filter: blur(12px);
+      transition: transform 0.3s, border-color 0.3s, box-shadow 0.3s;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .show-card:hover {
+      transform: translateY(-8px);
+      border-color: var(--neon-cyan);
+      box-shadow: 0 10px 30px rgba(0, 240, 255, 0.25);
+    }
+
+    .show-card.popular {
+      border: 2px solid var(--neon-gold);
+      box-shadow: 0 0 25px rgba(255, 184, 0, 0.2);
+    }
+
+    .popular-tag {
+      position: absolute;
+      top: -15px;
+      right: 20px;
+      background: var(--neon-gold);
+      color: #000;
+      font-weight: 900;
+      font-size: 0.75rem;
+      padding: 0.3rem 0.8rem;
+      border-radius: 20px;
+      text-transform: uppercase;
+    }
+
+    .show-card img {
+      width: 100%;
+      height: 180px;
+      object-fit: cover;
+      border-radius: 16px;
+      margin-bottom: 1.2rem;
+    }
+
+    .show-duration {
+      font-size: 0.85rem;
+      color: var(--neon-cyan);
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: 0.5rem;
+    }
+
+    .show-card h3 {
+      font-family: 'Outfit', sans-serif;
+      font-size: 1.6rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .show-price {
+      font-size: 1.8rem;
+      font-weight: 900;
+      color: var(--neon-gold);
+      margin-bottom: 1rem;
+    }
+
+    .show-card p {
+      color: var(--text-muted);
+      font-size: 0.95rem;
+      margin-bottom: 1.5rem;
+      flex-grow: 1;
+    }
+
+    /* Galería */
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .gallery-item {
+      position: relative;
+      border-radius: 20px;
+      overflow: hidden;
+      height: 300px;
+      border: 1px solid var(--border-glow);
+    }
+
+    .gallery-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform 0.5s ease;
+    }
+
+    .gallery-item:hover img {
+      transform: scale(1.08);
+    }
+
+    /* Cotizador Box */
+    .quote-box {
+      background: var(--bg-card);
+      border: 1px solid var(--border-glow);
+      border-radius: 32px;
+      padding: 3rem;
+      max-width: 700px;
+      margin: 0 auto;
+      backdrop-filter: blur(15px);
+    }
+
+    .form-group {
+      margin-bottom: 1.5rem;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 0.5rem;
+      font-weight: 600;
+    }
+
+    .form-control {
+      width: 100%;
+      padding: 0.9rem 1.2rem;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 14px;
+      color: #fff;
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+      border-color: var(--neon-cyan);
+    }
+
+    footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text-muted);
+      font-size: 0.9rem;
+    }
+
+    @media (max-width: 768px) {
+      nav { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Canvas con Físicas y Sonido de Burbujas -->
+  <canvas id="bubble-canvas"></canvas>
+
+  <div class="content-wrapper">
+    <!-- Navbar -->
+    <header>
+      <a href="#" class="logo">
+        <i class="fa-solid fa-wand-magic-sparkles"></i> Mago Iñigo
+      </a>
+      <nav>
+        <ul>
+          <li><a href="#shows" data-es="Espectáculos" data-en="Shows">Espectáculos</a></li>
+          <li><a href="#galeria" data-es="Galería" data-en="Gallery">Galería</a></li>
+          <li><a href="#cotizador" data-es="Cotizador" data-en="Get Quote">Cotizador</a></li>
+        </ul>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-lang" onclick="toggleLanguage()" id="lang-btn">🇺🇸 EN</button>
+        <a href="#cotizador" class="btn-primary">
+          <i class="fa-brands fa-whatsapp"></i> <span data-es="Reservar" data-en="Book Now">Reservar</span>
+        </a>
+      </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+      <div class="hero-badge">✨ <span data-es="El Arte de la Magia Sensorial" data-en="Sensory Magic Art">El Arte de la Magia Sensorial</span></div>
+      <h1><span data-es="Ilusiones que vuelan con" data-en="Illusions floating with">Ilusiones que vuelan con</span> <span>Burbujas Gigantes</span></h1>
+      <p data-es="Espectáculos excéntricos, poéticos y llenos de asombro para toda la familia." data-en="Eccentric, poetic, and magical performances for the whole family.">
+        Espectáculos excéntricos, poéticos y llenos de asombro para toda la familia.
+      </p>
+      <a href="#shows" class="btn-primary" data-es="Explorar Shows" data-en="Explore Shows">Explorar Shows</a>
+    </section>
+
+    <!-- Shows Cargados desde Supabase -->
+    <section id="shows">
+      <div class="section-header">
+        <h2 data-es="Nuestros Espectáculos" data-en="Our Shows">Nuestros Espectáculos</h2>
+        <p data-es="Precios y catálogo actualizados en tiempo real" data-en="Real-time prices and catalogue">Precios y catálogo actualizados en tiempo real</p>
+      </div>
+
+      <div class="shows-grid" id="shows-container">
+        <!-- Cargando datos... -->
+        <p style="text-align:center; grid-column: 1/-1; color: var(--neon-cyan);">🔮 Cargando espectáculos desde la base de datos...</p>
+      </div>
+    </section>
+
+    <!-- Galería -->
+    <section id="galeria">
+      <div class="section-header">
+        <h2 data-es="Galería de Momentos" data-en="Photo Gallery">Galería de Momentos</h2>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-item"><img src="img/laboratorio-burbujas.jpg" alt="Show 1" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/show-magia.jpg" alt="Show 2" onerror="this.src='https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/magia-intima.jpg" alt="Show 3" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/gran-escenario.jpg" alt="Show 4" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80'"></div>
+      </div>
+    </section>
+
+    <!-- Cotizador Instantáneo -->
+    <section id="cotizador">
+      <div class="quote-box">
+        <div class="section-header" style="margin-bottom: 2rem;">
+          <h2 data-es="Cotización Directa" data-en="Instant Quote">Cotización Directa</h2>
+        </div>
+        <form onsubmit="sendWhatsApp(event)">
+          <div class="form-group">
+            <label for="select-pkg" data-es="Selecciona el Show:" data-en="Select Show:">Selecciona el Show:</label>
+            <select id="select-pkg" class="form-control" required></select>
+          </div>
+          <div class="form-group">
+            <label for="input-city" data-es="Ubicación o Ciudad:" data-en="Location or City:">Ubicación o Ciudad:</label>
+            <input type="text" id="input-city" class="form-control" placeholder="Ej: Bogotá..." required>
+          </div>
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1.1rem;">
+            <i class="fa-brands fa-whatsapp"></i> <span data-es="Enviar Consulta por WhatsApp" data-en="Send WhatsApp Inquiry">Enviar Consulta por WhatsApp</span>
+          </button>
+        </form>
+      </div>
+    </section>
+
+    <footer>
+      <p>© 2026 Mago Iñigo · Todos los derechos reservados</p>
+    </footer>
+  </div>
+
+  <!-- JavaScript: Supabase, Canvas e Idiomas -->
+  <script>
+    // -------------------------------------------------------------
+    // CONFIGURACIÓN SUPABASE (REMPLAZA ESTAS 2 CLAVES)
+    // -------------------------------------------------------------
+    const SUPABASE_URL = 'https://rrmymtogbnhnmiktsgdj.supabase.co';
+    const SUPABASE_KEY = 'https://rrmymtogbnhnmiktsgdj.supabase.co/rest/v1/espectaculos';
+    
+    let currentLang = 'es';
+    let loadedShows = [];
+
+    // Inicializar cliente Supabase
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Cargar Espectáculos de la Base de Datos
+    async function fetchShows() {
+      const container = document.getElementById('shows-container');
+      const selectPkg = document.getElementById('select-pkg');
+
+      try {
+        const { data: shows, error } = await _supabase
+          .from('espectaculos')
+          .select('*')
+          .eq('activo', true)
+          .order('orden', { ascending: true });
+
+        if (error || !shows || shows.length === 0) {
+          throw error || new Error("Sin datos");
+        }
+
+        loadedShows = shows;
+        renderShows();
+      } catch (err) {
+        console.warn("Usando datos locales por falta de conexión Supabase:", err);
+        // Fallback de datos si aún no has conectado Supabase
+        loadedShows = [
+          { titulo_es: 'Laboratorio de Burbujas', titulo_en: 'Bubble Lab', duracion: '30 min', precio: 120, descripcion_es: 'Un acto 100% visual de burbujas gigantes e iluminación.', descripcion_en: 'Visual giant bubble show.', popular: false, imagen_url: 'img/laboratorio-burbujas.jpg' },
+          { titulo_es: 'Show de Magia', titulo_en: 'Magic Show', duracion: '45 min', precio: 150, descripcion_es: 'Espectáculo participativo lleno de humor.', descripcion_en: 'Interactive magic & comedy.', popular: false, imagen_url: 'img/show-magia.jpg' },
+          { titulo_es: 'Magia + Burbujas', titulo_en: 'Magic + Bubbles', duracion: '1h 20 min', precio: 220, descripcion_es: 'La combinación perfecta y más solicitada.', descripcion_en: 'The most popular complete show.', popular: true, imagen_url: 'img/magia-intima.jpg' },
+          { titulo_es: 'Experiencia Total', titulo_en: 'Total Experience', duracion: '2h', precio: 320, descripcion_es: 'Incluye encapsulador para estar dentro de una burbuja.', descripcion_en: 'Includes giant bubble encapsulation.', popular: false, imagen_url: 'img/gran-escenario.jpg' }
+        ];
+        renderShows();
+      }
+    }
+
+    function renderShows() {
+      const container = document.getElementById('shows-container');
+      const selectPkg = document.getElementById('select-pkg');
+      container.innerHTML = '';
+      selectPkg.innerHTML = '';
+
+      loadedShows.forEach(show => {
+        const title = currentLang === 'es' ? show.titulo_es : (show.titulo_en || show.titulo_es);
+        const desc = currentLang === 'es' ? show.descripcion_es : (show.descripcion_en || show.descripcion_es);
+
+        container.innerHTML += `
+          <div class="show-card ${show.popular ? 'popular' : ''}">
+            ${show.popular ? `<div class="popular-tag">⭐ ${currentLang === 'es' ? 'Más Solicitado' : 'Most Popular'}</div>` : ''}
+            <img src="${show.imagen_url}" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'">
+            <div class="show-duration">⏱️ ${show.duracion}</div>
+            <h3>${title}</h3>
+            <div class="show-price">$${show.precio} USD</div>
+            <p>${desc}</p>
+            <a href="#cotizador" onclick="selectPackage('${title}')" class="btn-primary" style="text-align:center; justify-content:center;">
+              ${currentLang === 'es' ? 'Cotizar Este Show' : 'Get Quote'}
+            </a>
+          </div>
+        `;
+
+        selectPkg.innerHTML += `<option value="${title} ($${show.precio} USD)">${title} ($${show.precio} USD)</option>`;
+      });
+    }
+
+    function selectPackage(title) {
+      const selectPkg = document.getElementById('select-pkg');
+      for (let i = 0; i < selectPkg.options.length; i++) {
+        if (selectPkg.options[i].value.includes(title)) {
+          selectPkg.selectedIndex = i;
+          break;
+        }
+      }
+    }
+
+    function toggleLanguage() {
+      currentLang = currentLang === 'es' ? 'en' : 'es';
+      document.getElementById('lang-btn').innerText = currentLang === 'es' ? '🇺🇸 EN' : '🇪🇸 ES';
+      
+      document.querySelectorAll('[data-es]').forEach(el => {
+        el.innerText = currentLang === 'es' ? el.getAttribute('data-es') : el.getAttribute('data-en');
+      });
+
+      renderShows();
+    }
+
+    function sendWhatsApp(e) {
+      e.preventDefault();
+      const pkg = document.getElementById('select-pkg').value;
+      const city = document.getElementById('input-city').value;
+      const phone = "573000000000";
+      const msg = `¡Hola Mago Iñigo! 🪄 Me interesa cotizar:%0A*Show:* ${pkg}%0A*Ubicación:* ${city}`;
+      window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
+    }
+
+    // Canvas Interactivo de Burbujas + Audio Pop Synthesizer
+    const canvas = document.getElementById('bubble-canvas');
+    const ctx = canvas.getContext('2d');
+    let width = canvas.width = window.innerWidth;
+    let height = canvas.height = window.innerHeight;
+
+    window.addEventListener('resize', () => {
+      width = canvas.width = window.innerWidth;
+      height = canvas.height = window.innerHeight;
+    });
+
+    const audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+    function playPopSound() {
+      if (audioCtx.state === 'suspended') audioCtx.resume();
+      const osc = audioCtx.createOscillator();
+      const gain = audioCtx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320 + Math.random() * 300, audioCtx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(80, audioCtx.currentTime + 0.08);
+      gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.08);
+      osc.connect(gain);
+      gain.connect(audioCtx.destination);
+      osc.start();
+      osc.stop(audioCtx.currentTime + 0.08);
+    }
+
+    class Bubble {
+      constructor(x, y, radius = null) {
+        this.x = x || Math.random() * width;
+        this.y = y || height + 50;
+        this.radius = radius || Math.random() * 30 + 15;
+        this.vx = (Math.random() - 0.5) * 1.5;
+        this.vy = -(Math.random() * 1.8 + 0.8);
+        this.hue = Math.random() * 360;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        if (this.y < -this.radius * 2) {
+          this.y = height + this.radius;
+          this.x = Math.random() * width;
+        }
+      }
+      draw() {
+        ctx.save();
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        const grad = ctx.createRadialGradient(this.x - this.radius*0.3, this.y - this.radius*0.3, this.radius*0.1, this.x, this.y, this.radius);
+        grad.addColorStop(0, `hsla(${this.hue}, 90%, 80%, 0.9)`);
+        grad.addColorStop(0.5, `hsla(${(this.hue + 60) % 360}, 80%, 50%, 0.3)`);
+        grad.addColorStop(1, `hsla(${(this.hue + 180) % 360}, 90%, 40%, 0.6)`);
+        ctx.strokeStyle = grad;
+        ctx.lineWidth = 2.5;
+        ctx.stroke();
+        ctx.restore();
+      }
+      contains(px, py) {
+        const dx = this.x - px, dy = this.y - py;
+        return dx * dx + dy * dy <= this.radius * this.radius;
+      }
+    }
+
+    const bubbles = Array.from({ length: 30 }, () => new Bubble());
+    function animate() {
+      ctx.clearRect(0, 0, width, height);
+      bubbles.forEach(b => { b.update(); b.draw(); });
+      requestAnimationFrame(animate);
+    }
+    animate();
+
+    window.addEventListener('click', (e) => {
+      let popped = false;
+      for (let i = bubbles.length - 1; i >= 0; i--) {
+        if (bubbles[i].contains(e.clientX, e.clientY)) {
+          playPopSound();
+          if (bubbles[i].radius > 12) {
+            bubbles.push(new Bubble(bubbles[i].x - 15, bubbles[i].y, bubbles[i].radius * 0.6));
+            bubbles.push(new Bubble(bubbles[i].x + 15, bubbles[i].y, bubbles[i].radius * 0.6));
+          }
+          bubbles.splice(i, 1);
+          popped = true;
+          break;
+        }
+      }
+      if (!popped) bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 25 + 15));
+    });
+
+    document.addEventListener('DOMContentLoaded', fetchShows);
+  </script>
+</body>
+</html>

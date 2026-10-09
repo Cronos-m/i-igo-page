@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Administración | Mago Iñigo</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <!-- SDK de Supabase -->
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #1e293b;
+      --accent: #a855f7;
+      --accent-hover: #9333ea;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: #334155;
+      --danger: #ef4444;
+      --success: #22c55e;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body { background-color: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; padding: 2rem; }
+
+    .container { max-width: 1000px; margin: 0 auto; }
+    header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 2.5rem; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+    h1 { font-size: 1.8rem; font-weight: 800; display: flex; align-items: center; gap: 0.5rem; }
+
+    .card { background: var(--card-bg); border: 1px solid var(--border); border-radius: 16px; padding: 1.8rem; margin-bottom: 1.5rem; box-shadow: 0 10px 25px rgba(0,0,0,0.3); }
+    
+    .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-bottom: 1rem; }
+    .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+    .form-group.full { grid-column: 1 / -1; }
+
+    label { font-weight: 700; font-size: 0.85rem; color: var(--muted); text-transform: uppercase; }
+    input, textarea, select { background: #0f172a; border: 1px solid var(--border); color: #fff; padding: 0.75rem; border-radius: 8px; font-family: inherit; font-size: 0.95rem; outline: none; }
+    input:focus, textarea:focus { border-color: var(--accent); }
+
+    .checkbox-group { display: flex; align-items: center; gap: 0.5rem; cursor: pointer; margin-top: 0.5rem; }
+    .checkbox-group input { width: auto; cursor: pointer; }
+
+    .btn { background: var(--accent); color: white; padding: 0.75rem 1.5rem; border: none; border-radius: 8px; font-weight: 700; cursor: pointer; display: inline-flex; align-items: center; gap: 0.5rem; transition: background 0.2s; }
+    .btn:hover { background: var(--accent-hover); }
+    .btn-danger { background: var(--danger); }
+    .btn-danger:hover { background: #dc2626; }
+    .btn-success { background: var(--success); }
+
+    #login-box { max-width: 400px; margin: 5rem auto; }
+  </style>
+</head>
+<body>
+
+  <div class="container">
+    
+    <!-- LOGIN FORM -->
+    <div id="login-section" class="card" style="max-width: 420px; margin: 4rem auto;">
+      <h2 style="margin-bottom: 1.5rem; text-align: center;">🔐 Admin Login</h2>
+      <div class="form-group" style="margin-bottom: 1rem;">
+        <label>Correo Electrónico</label>
+        <input type="email" id="login-email" placeholder="admin@magoinigo.com" required>
+      </div>
+      <div class="form-group" style="margin-bottom: 1.5rem;">
+        <label>Contraseña</label>
+        <input type="password" id="login-password" placeholder="••••••••" required>
+      </div>
+      <button onclick="login()" class="btn" style="width: 100%; justify-content: center;">
+        <i class="fa-solid fa-right-to-bracket"></i> Iniciar Sesión
+      </button>
+    </div>
+
+    <!-- ADMIN DASHBOARD (OCULTO POR DEFECTO) -->
+    <div id="dashboard-section" style="display: none;">
+      <header>
+        <h1>⚙️ Panel de Control de Espectáculos</h1>
+        <button onclick="logout()" class="btn btn-danger">
+          <i class="fa-solid fa-power-off"></i> Cerrar Sesión
+        </button>
+      </header>
+
+      <!-- BOTÓN AGREGAR NUEVO -->
+      <div style="margin-bottom: 2rem; display: flex; justify-content: space-between; align-items: center;">
+        <h2>Catalogo de Espectáculos</h2>
+        <button onclick="mostrarModalNuevo()" class="btn btn-success">
+          <i class="fa-solid fa-plus"></i> Agregar Nuevo Show
+        </button>
+      </div>
+
+      <!-- LISTA EDITABLE DE SHOWS -->
+      <div id="shows-admin-list"></div>
+    </div>
+
+  </div>
+
+  <script>
+    // -------------------------------------------------------------
+    // CONFIGURACIÓN SUPABASE (REMPLAZA ESTAS 2 CLAVES)
+    // -------------------------------------------------------------
+    const SUPABASE_URL = 'https://TU-PROYECTO.supabase.co';
+    const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...';
+
+    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+
+    // Verificar Sesión al Cargar
+    async function checkSession() {
+      const { data: { session } } = await _supabase.auth.getSession();
+      if (session) {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        cargarAdminShows();
+      }
+    }
+
+    // Login
+    async function login() {
+      const email = document.getElementById('login-email').value;
+      const password = document.getElementById('login-password').value;
+
+      const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+
+      if (error) {
+        alert(' Error al acceder: ' + error.message);
+      } else {
+        document.getElementById('login-section').style.display = 'none';
+        document.getElementById('dashboard-section').style.display = 'block';
+        cargarAdminShows();
+      }
+    }
+
+    // Logout
+    async function logout() {
+      await _supabase.auth.signOut();
+      location.reload();
+    }
+
+    // Cargar Lista Completa para Editar
+    async function cargarAdminShows() {
+      const listContainer = document.getElementById('shows-admin-list');
+      listContainer.innerHTML = '<p>Cargando espectáculos...</p>';
+
+      const { data: shows, error } = await _supabase
+        .from('espectaculos')
+        .select('*')
+        .order('orden', { ascending: true });
+
+      if (error) {
+        alert('Error consultando base de datos: ' + error.message);
+        return;
+      }
+
+      listContainer.innerHTML = '';
+
+      shows.forEach(show => {
+        listContainer.innerHTML += `
+          <div class="card" id="card-${show.id}">
+            <div class="form-grid">
+              <div class="form-group">
+                <label>Título (Español)</label>
+                <input type="text" id="title-es-${show.id}" value="${show.titulo_es || ''}">
+              </div>
+              <div class="form-group">
+                <label>Título (Inglés)</label>
+                <input type="text" id="title-en-${show.id}" value="${show.titulo_en || ''}">
+              </div>
+              <div class="form-group">
+                <label>Precio (USD)</label>
+                <input type="number" id="price-${show.id}" value="${show.precio}">
+              </div>
+              <div class="form-group">
+                <label>Duración</label>
+                <input type="text" id="dur-${show.id}" value="${show.duracion}">
+              </div>
+              <div class="form-group">
+                <label>Orden</label>
+                <input type="number" id="orden-${show.id}" value="${show.orden}">
+              </div>
+              <div class="form-group full">
+                <label>URL de Imagen</label>
+                <input type="text" id="img-${show.id}" value="${show.imagen_url || ''}">
+              </div>
+              <div class="form-group full">
+                <label>Descripción (Español)</label>
+                <textarea id="desc-es-${show.id}" rows="2">${show.descripcion_es || ''}</textarea>
+              </div>
+              <div class="form-group full">
+                <label>Descripción (Inglés)</label>
+                <textarea id="desc-en-${show.id}" rows="2">${show.descripcion_en || ''}</textarea>
+              </div>
+            </div>
+
+            <div style="display: flex; gap: 1.5rem; align-items: center; margin-bottom: 1.2rem;">
+              <label class="checkbox-group">
+                <input type="checkbox" id="popular-${show.id}" ${show.popular ? 'checked' : ''}>
+                <span>⭐ Etiqueta Popular</span>
+              </label>
+              <label class="checkbox-group">
+                <input type="checkbox" id="activo-${show.id}" ${show.activo ? 'checked' : ''}>
+                <span>🟢 Activo / Visible</span>
+              </label>
+            </div>
+
+            <button onclick="guardarShow('${show.id}')" class="btn">
+              <i class="fa-solid fa-floppy-disk"></i> Guardar Cambios
+            </button>
+          </div>
+        `;
+      });
+    }
+
+    // Guardar Cambios en Supabase
+    async function guardarShow(id) {
+      const updatedData = {
+        titulo_es: document.getElementById(`title-es-${id}`).value,
+        titulo_en: document.getElementById(`title-en-${id}`).value,
+        precio: parseFloat(document.getElementById(`price-${id}`).value),
+        duracion: document.getElementById(`dur-${id}`).value,
+        orden: parseInt(document.getElementById(`orden-${id}`).value),
+        imagen_url: document.getElementById(`img-${id}`).value,
+        descripcion_es: document.getElementById(`desc-es-${id}`).value,
+        descripcion_en: document.getElementById(`desc-en-${id}`).value,
+        popular: document.getElementById(`popular-${id}`).checked,
+        activo: document.getElementById(`activo-${id}`).checked
+      };
+
+      const { error } = await _supabase
+        .from('espectaculos')
+        .update(updatedData)
+        .eq('id', id);
+
+      if (error) {
+        alert('Error al actualizar: ' + error.message);
+      } else {
+        alert('✅ ¡Cambios guardados con éxito!');
+      }
+    }
+
+    // Agregar Nuevo Espectáculo
+    async function mostrarModalNuevo() {
+      const titulo = prompt("Título del nuevo espectáculo:");
+      if (!titulo) return;
+
+      const { error } = await _supabase
+        .from('espectaculos')
+        .insert([{
+          titulo_es: titulo,
+          duracion: '45 min',
+          precio: 150,
+          descripcion_es: 'Descripción del nuevo espectáculo...',
+          activo: true,
+          orden: 99
+        }]);
+
+      if (error) alert('Error creando registro: ' + error.message);
+      else {
+        alert('✅ ¡Show agregado!');
+        cargarAdminShows();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', checkSession);
+  </script>
+</body>
+</html>
