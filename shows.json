@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "titulo_es": "Laboratorio de Burbujas",
+    "titulo_en": "Bubble Lab",
+    "duracion": "30 min",
+    "precio": 120,
+    "descripcion_es": "Un acto 100% visual de burbujas gigantes, humo e iluminación escénica.",
+    "descripcion_en": "A 100% visual giant bubble and smoke show.",
+    "popular": false,
+    "imagen_url": "img/laboratorio-burbujas.jpg",
+    "orden": 1,
+    "activo": true
+  },
+  {
+    "id": 2,
+    "titulo_es": "Show de Magia",
+    "titulo_en": "Magic Show",
+    "duracion": "45 min",
+    "precio": 150,
+    "descripcion_es": "Espectáculo participativo lleno de asombro y humor refinado.",
+    "descripcion_en": "Interactive magic show filled with wonder and refined humor.",
+    "popular": false,
+    "imagen_url": "img/show-magia.jpg",
+    "orden": 2,
+    "activo": true
+  },
+  {
+    "id": 3,
+    "titulo_es": "Magia + Burbujas",
+    "titulo_en": "Magic + Bubbles",
+    "duracion": "1h 20 min",
+    "precio": 220,
+    "descripcion_es": "La combinación perfecta y el espectáculo más solicitado para eventos memorables.",
+    "descripcion_en": "The perfect combination and most requested show for memorable events.",
+    "popular": true,
+    "imagen_url": "img/magia-intima.jpg",
+    "orden": 3,
+    "activo": true
+  },
+  {
+    "id": 4,
+    "titulo_es": "Experiencia Total",
+    "titulo_en": "Total Experience",
+    "duracion": "2h",
+    "precio": 320,
+    "descripcion_es": "Incluye gran escenario e interactividad donde el público puede encapsularse.",
+    "descripcion_en": "Includes grand stage setup and interactivity where guests are encapsulated.",
+    "popular": false,
+    "imagen_url": "img/gran-escenario.jpg",
+    "orden": 4,
+    "activo": true
+  }
+]

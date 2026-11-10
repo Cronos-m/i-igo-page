@@ -9,25 +9,24 @@
   <!-- Tipografías de Alta Fidelidad -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;600;800;900&family=Plus+Jakarta+Sans:wght@400;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
-  <!-- Carga del archivo de estilos externo (cambia la ruta para probar cada estilo) -->
+  <!-- Estilos Externos -->
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <!-- SDK de Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-
 </head>
 <body>
 
-  <!-- Canvas con Físicas y Sonido de Burbujas -->
+  <!-- Canvas con Burbujas al fondo absoluto -->
   <canvas id="bubble-canvas"></canvas>
 
+  <!-- Aviso interactivo sutil -->
+  <div class="bubble-hint" data-es="✨ Haz clic o toca las burbujas para estallarlas" data-en="✨ Click or tap bubbles to pop them">
+    ✨ Haz clic o toca las burbujas para estallarlas
+  </div>
+
   <div class="content-wrapper">
-    <!-- Navbar -->
+    <!-- Navbar Minimalista -->
     <header>
       <a href="#" class="logo">
         <i class="fa-solid fa-wand-magic-sparkles"></i> Mago Iñigo
@@ -47,7 +46,7 @@
       </div>
     </header>
 
-    <!-- Hero -->
+    <!-- Hero Section -->
     <section class="hero">
       <div class="hero-badge">✨ <span data-es="El Arte de la Magia Sensorial" data-en="Sensory Magic Art">El Arte de la Magia Sensorial</span></div>
       <h1><span data-es="Ilusiones que vuelan con" data-en="Illusions floating with">Ilusiones que vuelan con</span> <span>Burbujas Gigantes</span></h1>
@@ -57,29 +56,30 @@
       <a href="#shows" class="btn-primary" data-es="Explorar Shows" data-en="Explore Shows">Explorar Shows</a>
     </section>
 
-    <!-- Shows Cargados desde Supabase -->
+    <!-- Sección de Espectáculos -->
     <section id="shows">
       <div class="section-header">
         <h2 data-es="Nuestros Espectáculos" data-en="Our Shows">Nuestros Espectáculos</h2>
-        <p data-es="Precios y catálogo actualizados en tiempo real" data-en="Real-time prices and catalogue">Precios y catálogo actualizados en tiempo real</p>
+        <p data-es="Catálogo exclusivo con precios en tu moneda local" data-en="Exclusive catalog with local currency prices">Catálogo exclusivo con precios en tu moneda local</p>
       </div>
 
       <div class="shows-grid" id="shows-container">
-        <!-- Cargando datos... -->
-        <p style="text-align:center; grid-column: 1/-1; color: var(--neon-cyan);">🔮 Cargando espectáculos desde la base de datos...</p>
+        <!-- Estado de carga dinámico -->
+        <p style="text-align:center; grid-column: 1/-1; color: var(--text-muted);">🔮 Cargando espectáculos...</p>
       </div>
     </section>
 
-    <!-- Galería -->
+    <!-- Galería de Momentos -->
     <section id="galeria">
       <div class="section-header">
         <h2 data-es="Galería de Momentos" data-en="Photo Gallery">Galería de Momentos</h2>
+        <p data-es="Instantes capturados en escena" data-en="Moments captured on stage">Instantes capturados en escena</p>
       </div>
       <div class="gallery-grid">
-        <div class="gallery-item"><img src="img/laboratorio-burbujas.jpg" alt="Show 1" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'"></div>
-        <div class="gallery-item"><img src="img/show-magia.jpg" alt="Show 2" onerror="this.src='https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80'"></div>
-        <div class="gallery-item"><img src="img/magia-intima.jpg" alt="Show 3" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80'"></div>
-        <div class="gallery-item"><img src="img/gran-escenario.jpg" alt="Show 4" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/laboratorio-burbujas.jpg" alt="Laboratorio de Burbujas" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/show-magia.jpg" alt="Show de Magia" onerror="this.src='https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/magia-intima.jpg" alt="Magia Íntima" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80'"></div>
+        <div class="gallery-item"><img src="img/gran-escenario.jpg" alt="Gran Escenario" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80'"></div>
       </div>
     </section>
 
@@ -88,6 +88,7 @@
       <div class="quote-box">
         <div class="section-header" style="margin-bottom: 2rem;">
           <h2 data-es="Cotización Directa" data-en="Instant Quote">Cotización Directa</h2>
+          <p data-es="Calcula y conecta de inmediato vía WhatsApp" data-en="Calculate and connect instantly via WhatsApp">Calcula y conecta de inmediato vía WhatsApp</p>
         </div>
         <form onsubmit="sendWhatsApp(event)">
           <div class="form-group">
@@ -98,7 +99,7 @@
             <label for="input-city" data-es="Ubicación o Ciudad:" data-en="Location or City:">Ubicación o Ciudad:</label>
             <input type="text" id="input-city" class="form-control" placeholder="Ej: Bogotá..." required>
           </div>
-          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1.1rem;">
+          <button type="submit" class="btn-primary" style="width: 100%; justify-content: center; font-size: 1rem; margin-top: 1rem;">
             <i class="fa-brands fa-whatsapp"></i> <span data-es="Enviar Consulta por WhatsApp" data-en="Send WhatsApp Inquiry">Enviar Consulta por WhatsApp</span>
           </button>
         </form>
@@ -110,48 +111,72 @@
     </footer>
   </div>
 
-  <!-- JavaScript: Supabase, Canvas e Idiomas -->
+  <!-- JavaScript: Divisas, Canvas al fondo, Efectos y Audio -->
   <script>
-    // -------------------------------------------------------------
-    // CONFIGURACIÓN SUPABASE (REMPLAZA ESTAS 2 CLAVES)
-    // -------------------------------------------------------------
-    const SUPABASE_URL = 'https://rrmymtogbnhnmiktsgdj.supabase.co';
-    const SUPABASE_KEY = 'https://rrmymtogbnhnmiktsgdj.supabase.co/rest/v1/espectaculos';
-    
     let currentLang = 'es';
     let loadedShows = [];
+    let userCurrency = 'USD';
+    let exchangeRates = { USD: 1 };
 
-    // Inicializar cliente Supabase
-    const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+    async function initCurrencyDetection() {
+      try {
+        const geoRes = await fetch('https://ipapi.co/json/');
+        const geoData = await geoRes.json();
+        if (geoData && geoData.currency) {
+          userCurrency = geoData.currency;
+        }
+      } catch (err) {
+        console.warn("No se pudo detectar la moneda local por IP, usando USD.");
+      }
 
-    // Cargar Espectáculos de la Base de Datos
-    async function fetchShows() {
-      const container = document.getElementById('shows-container');
-      const selectPkg = document.getElementById('select-pkg');
+      if (userCurrency !== 'USD') {
+        try {
+          const rateRes = await fetch('https://open.er-api.com/v6/latest/USD');
+          const rateData = await rateRes.json();
+          if (rateData && rateData.rates) {
+            exchangeRates = rateData.rates;
+          }
+        } catch (err) {
+          console.warn("No se pudieron cargar las tasas de cambio de divisas.");
+        }
+      }
+    }
+
+    function formatPrice(usdPrice) {
+      if (userCurrency === 'USD' || !exchangeRates[userCurrency]) {
+        return `$${usdPrice} USD`;
+      }
+      
+      const rate = exchangeRates[userCurrency];
+      const localPrice = Math.round(usdPrice * rate);
 
       try {
-        const { data: shows, error } = await _supabase
-          .from('espectaculos')
-          .select('*')
-          .eq('activo', true)
-          .order('orden', { ascending: true });
+        return new Intl.NumberFormat('es-ES', { 
+          style: 'currency', 
+          currency: userCurrency, 
+          maximumFractionDigits: 0 
+        }).format(localPrice);
+      } catch (e) {
+        return `${localPrice.toLocaleString()} ${userCurrency}`;
+      }
+    }
 
-        if (error || !shows || shows.length === 0) {
-          throw error || new Error("Sin datos");
-        }
+    async function fetchShows() {
+      await initCurrencyDetection();
 
-        loadedShows = shows;
+      try {
+        const response = await fetch('shows.json');
+        if (!response.ok) throw new Error("No se pudo cargar el archivo de datos.");
+        const data = await response.json();
+        
+        loadedShows = data.filter(show => show.activo).sort((a, b) => a.orden - b.orden);
         renderShows();
       } catch (err) {
-        console.warn("Usando datos locales por falta de conexión Supabase:", err);
-        // Fallback de datos si aún no has conectado Supabase
-        loadedShows = [
-          { titulo_es: 'Laboratorio de Burbujas', titulo_en: 'Bubble Lab', duracion: '30 min', precio: 120, descripcion_es: 'Un acto 100% visual de burbujas gigantes e iluminación.', descripcion_en: 'Visual giant bubble show.', popular: false, imagen_url: 'img/laboratorio-burbujas.jpg' },
-          { titulo_es: 'Show de Magia', titulo_en: 'Magic Show', duracion: '45 min', precio: 150, descripcion_es: 'Espectáculo participativo lleno de humor.', descripcion_en: 'Interactive magic & comedy.', popular: false, imagen_url: 'img/show-magia.jpg' },
-          { titulo_es: 'Magia + Burbujas', titulo_en: 'Magic + Bubbles', duracion: '1h 20 min', precio: 220, descripcion_es: 'La combinación perfecta y más solicitada.', descripcion_en: 'The most popular complete show.', popular: true, imagen_url: 'img/magia-intima.jpg' },
-          { titulo_es: 'Experiencia Total', titulo_en: 'Total Experience', duracion: '2h', precio: 320, descripcion_es: 'Incluye encapsulador para estar dentro de una burbuja.', descripcion_en: 'Includes giant bubble encapsulation.', popular: false, imagen_url: 'img/gran-escenario.jpg' }
-        ];
-        renderShows();
+        console.error("Error al cargar shows.json:", err);
+        document.getElementById('shows-container').innerHTML = `
+          <p style="text-align:center; grid-column: 1/-1; color: var(--accent-gold);">
+            ⚠️ Error al cargar el catálogo. Asegúrate de abrir el sitio mediante un servidor local (Live Server).
+          </p>`;
       }
     }
 
@@ -164,14 +189,17 @@
       loadedShows.forEach(show => {
         const title = currentLang === 'es' ? show.titulo_es : (show.titulo_en || show.titulo_es);
         const desc = currentLang === 'es' ? show.descripcion_es : (show.descripcion_en || show.descripcion_es);
+        const priceDisplay = formatPrice(show.precio);
 
         container.innerHTML += `
           <div class="show-card ${show.popular ? 'popular' : ''}">
             ${show.popular ? `<div class="popular-tag">⭐ ${currentLang === 'es' ? 'Más Solicitado' : 'Most Popular'}</div>` : ''}
-            <img src="${show.imagen_url}" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'">
+            <div class="img-container">
+              <img src="${show.imagen_url}" alt="${title}" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'">
+            </div>
             <div class="show-duration">⏱️ ${show.duracion}</div>
             <h3>${title}</h3>
-            <div class="show-price">$${show.precio} USD</div>
+            <div class="show-price">${priceDisplay}</div>
             <p>${desc}</p>
             <a href="#cotizador" onclick="selectPackage('${title}')" class="btn-primary" style="text-align:center; justify-content:center;">
               ${currentLang === 'es' ? 'Cotizar Este Show' : 'Get Quote'}
@@ -179,7 +207,7 @@
           </div>
         `;
 
-        selectPkg.innerHTML += `<option value="${title} ($${show.precio} USD)">${title} ($${show.precio} USD)</option>`;
+        selectPkg.innerHTML += `<option value="${title} (${priceDisplay})">${title} (${priceDisplay})</option>`;
       });
     }
 
@@ -208,12 +236,12 @@
       e.preventDefault();
       const pkg = document.getElementById('select-pkg').value;
       const city = document.getElementById('input-city').value;
-      const phone = "573000000000";
+      const phone = "573000000000"; 
       const msg = `¡Hola Mago Iñigo! 🪄 Me interesa cotizar:%0A*Show:* ${pkg}%0A*Ubicación:* ${city}`;
       window.open(`https://wa.me/${phone}?text=${msg}`, '_blank');
     }
 
-    // Canvas Interactivo de Burbujas + Audio Pop Synthesizer
+    // --- CANVAS DE BURBUJAS AL FONDO ---
     const canvas = document.getElementById('bubble-canvas');
     const ctx = canvas.getContext('2d');
     let width = canvas.width = window.innerWidth;
@@ -240,17 +268,49 @@
       osc.stop(audioCtx.currentTime + 0.08);
     }
 
+    class Particle {
+      constructor(x, y, hue) {
+        this.x = x;
+        this.y = y;
+        this.radius = Math.random() * 3 + 1;
+        const angle = Math.random() * Math.PI * 2;
+        const speed = Math.random() * 3.5 + 0.8;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.alpha = 1;
+        this.hue = hue;
+      }
+      update() {
+        this.x += this.vx;
+        this.y += this.vy;
+        this.vy += 0.05;
+        this.alpha -= 0.03;
+      }
+      draw() {
+        if (this.alpha <= 0) return;
+        ctx.save();
+        ctx.globalAlpha = Math.max(this.alpha, 0);
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+        ctx.fillStyle = `hsla(${this.hue}, 100%, 90%, 1)`;
+        ctx.shadowColor = `hsla(${this.hue}, 100%, 80%, 0.8)`;
+        ctx.shadowBlur = 8;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
     class Bubble {
       constructor(x, y, radius = null) {
         this.x = x || Math.random() * width;
         this.y = y || height + 50;
-        this.radius = radius || Math.random() * 30 + 15;
-        this.vx = (Math.random() - 0.5) * 1.5;
-        this.vy = -(Math.random() * 1.8 + 0.8);
+        this.radius = radius || Math.random() * 32 + 18;
+        this.vx = (Math.random() - 0.5) * 0.8;
+        this.vy = -(Math.random() * 0.9 + 0.4);
         this.hue = Math.random() * 360;
       }
       update() {
-        this.x += this.vx;
+        this.x += this.vx + Math.sin(this.y * 0.02) * 0.4;
         this.y += this.vy;
         if (this.y < -this.radius * 2) {
           this.y = height + this.radius;
@@ -261,44 +321,86 @@
         ctx.save();
         ctx.beginPath();
         ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
-        const grad = ctx.createRadialGradient(this.x - this.radius*0.3, this.y - this.radius*0.3, this.radius*0.1, this.x, this.y, this.radius);
-        grad.addColorStop(0, `hsla(${this.hue}, 90%, 80%, 0.9)`);
-        grad.addColorStop(0.5, `hsla(${(this.hue + 60) % 360}, 80%, 50%, 0.3)`);
-        grad.addColorStop(1, `hsla(${(this.hue + 180) % 360}, 90%, 40%, 0.6)`);
+        
+        const grad = ctx.createRadialGradient(
+          this.x - this.radius * 0.35, this.y - this.radius * 0.35, this.radius * 0.05, 
+          this.x, this.y, this.radius
+        );
+        grad.addColorStop(0, `hsla(${this.hue}, 100%, 95%, 0.85)` );
+        grad.addColorStop(0.4, `hsla(${(this.hue + 40) % 360}, 90%, 75%, 0.25)` );
+        grad.addColorStop(0.85, `hsla(${(this.hue + 160) % 360}, 100%, 65%, 0.4)` );
+        grad.addColorStop(1, `hsla(${this.hue}, 100%, 90%, 0.8)` );
+
         ctx.strokeStyle = grad;
-        ctx.lineWidth = 2.5;
+        ctx.lineWidth = 2.2;
+        ctx.shadowColor = `hsla(${this.hue}, 100%, 80%, 0.6)`;
+        ctx.shadowBlur = 10;
         ctx.stroke();
+
+        ctx.beginPath();
+        ctx.arc(this.x - this.radius * 0.35, this.y - this.radius * 0.35, this.radius * 0.18, 0, Math.PI * 2);
+        ctx.fillStyle = 'rgba(255, 255, 255, 0.65)';
+        ctx.fill();
+
         ctx.restore();
       }
       contains(px, py) {
         const dx = this.x - px, dy = this.y - py;
-        return dx * dx + dy * dy <= this.radius * this.radius;
+        return dx * dx + dy * dy <= (this.radius + 6) * (this.radius + 6);
       }
     }
 
-    const bubbles = Array.from({ length: 30 }, () => new Bubble());
+    const bubbles = Array.from({ length: 25 }, () => new Bubble());
+    let particles = [];
+
     function animate() {
       ctx.clearRect(0, 0, width, height);
       bubbles.forEach(b => { b.update(); b.draw(); });
+      
+      for (let i = particles.length - 1; i >= 0; i--) {
+        particles[i].update();
+        particles[i].draw();
+        if (particles[i].alpha <= 0) {
+          particles.splice(i, 1);
+        }
+      }
+
       requestAnimationFrame(animate);
     }
     animate();
 
-    window.addEventListener('click', (e) => {
+    window.addEventListener('pointerdown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const clientX = e.clientX - rect.left;
+      const clientY = e.clientY - rect.top;
+
       let popped = false;
       for (let i = bubbles.length - 1; i >= 0; i--) {
-        if (bubbles[i].contains(e.clientX, e.clientY)) {
+        if (bubbles[i].contains(clientX, clientY)) {
           playPopSound();
-          if (bubbles[i].radius > 12) {
-            bubbles.push(new Bubble(bubbles[i].x - 15, bubbles[i].y, bubbles[i].radius * 0.6));
-            bubbles.push(new Bubble(bubbles[i].x + 15, bubbles[i].y, bubbles[i].radius * 0.6));
+          
+          for (let p = 0; p < 14; p++) {
+            particles.push(new Particle(bubbles[i].x, bubbles[i].y, bubbles[i].hue));
           }
+
+          if (bubbles[i].radius > 14) {
+            bubbles.push(new Bubble(bubbles[i].x - 12, bubbles[i].y, bubbles[i].radius * 0.55));
+            bubbles.push(new Bubble(bubbles[i].x + 12, bubbles[i].y, bubbles[i].radius * 0.55));
+          }
+
           bubbles.splice(i, 1);
           popped = true;
           break;
         }
       }
-      if (!popped) bubbles.push(new Bubble(e.clientX, e.clientY, Math.random() * 25 + 15));
+
+      if (!popped) {
+        playPopSound();
+        for (let p = 0; p < 10; p++) {
+          particles.push(new Particle(clientX, clientY, Math.random() * 360));
+        }
+        bubbles.push(new Bubble(clientX, clientY, Math.random() * 25 + 18));
+      }
     });
 
     document.addEventListener('DOMContentLoaded', fetchShows);

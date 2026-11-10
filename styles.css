@@ -1,14 +1,11 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400;1,600&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap');
 
 :root {
-  /* Paleta Inspirada en magiayburbujas.com */
   --bg-dark: #0a0a0c;
   --bg-card: rgba(18, 18, 22, 0.75);
-  --accent-gold: #d4af37;        /* Oro Champagne refinado */
-  --accent-cyan: #e2e8f0;        /* Blanco Platino */
+  --accent-gold: #d4af37;
   --text-main: #f8fafc;
   --text-muted: #94a3b8;
-  --border-glow: rgba(212, 175, 55, 0.15);
 }
 
 * {
@@ -16,6 +13,7 @@
   margin: 0;
   padding: 0;
   scroll-behavior: smooth;
+  user-select: none; /* Evitar selección de texto en todo el sitio */
 }
 
 body {
@@ -27,28 +25,24 @@ body {
   letter-spacing: 0.2px;
 }
 
-/* Canvas de Burbujas */
+/* Canvas de Burbujas al fondo absoluto */
 #bubble-canvas {
   position: fixed;
   top: 0;
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: 1;
-  opacity: 0.85;
+  z-index: 0;
+  pointer-events: auto;
+  cursor: pointer;
 }
 
 .content-wrapper {
   position: relative;
   z-index: 2;
-  pointer-events: none;
 }
 
-.content-wrapper *, .interactive {
-  pointer-events: auto;
-}
-
-/* Navbar Minimalista & Editorial */
+/* Navbar */
 header {
   position: fixed;
   top: 0;
@@ -77,7 +71,6 @@ header {
 
 .logo i {
   color: var(--accent-gold);
-  font-size: 1.2rem;
 }
 
 nav ul {
@@ -89,7 +82,6 @@ nav ul {
 nav a {
   color: var(--text-muted);
   text-decoration: none;
-  font-weight: 400;
   font-size: 0.9rem;
   letter-spacing: 1px;
   text-transform: uppercase;
@@ -112,10 +104,8 @@ nav a:hover {
   border: 1px solid rgba(255, 255, 255, 0.15);
   padding: 0.4rem 0.9rem;
   border-radius: 4px;
-  font-weight: 500;
   cursor: pointer;
   font-size: 0.8rem;
-  letter-spacing: 1px;
   transition: all 0.3s;
 }
 
@@ -130,7 +120,6 @@ nav a:hover {
   padding: 0.7rem 1.8rem;
   border-radius: 4px;
   text-decoration: none;
-  font-family: 'Plus Jakarta Sans', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
   letter-spacing: 1.5px;
@@ -146,7 +135,7 @@ nav a:hover {
 .btn-primary:hover {
   background: var(--accent-gold);
   color: #000;
-  box-shadow: 0 0 25px rgba(212, 175, 55, 0.25);
+  box-shadow: 0 0 25px rgba(212, 175, 55, 0.3);
   transform: translateY(-2px);
 }
 
@@ -170,7 +159,6 @@ nav a:hover {
   text-transform: uppercase;
   color: var(--accent-gold);
   margin-bottom: 2rem;
-  font-weight: 500;
 }
 
 .hero h1 {
@@ -180,12 +168,10 @@ nav a:hover {
   line-height: 1.05;
   margin-bottom: 1.8rem;
   max-width: 950px;
-  color: #ffffff;
 }
 
 .hero h1 span {
   font-style: italic;
-  font-weight: 400;
   color: var(--accent-gold);
 }
 
@@ -197,7 +183,6 @@ nav a:hover {
   font-weight: 300;
 }
 
-/* Secciones */
 section {
   padding: 7rem 2rem;
   max-width: 1150px;
@@ -213,17 +198,15 @@ section {
   font-family: 'Cormorant Garamond', serif;
   font-size: 3.2rem;
   font-weight: 400;
-  letter-spacing: 1px;
   margin-bottom: 0.6rem;
 }
 
 .section-header p {
   color: var(--text-muted);
   font-size: 1rem;
-  font-weight: 300;
 }
 
-/* Grillados y Tarjetas */
+/* Tarjetas y Efecto Hover en Imágenes */
 .shows-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -240,6 +223,7 @@ section {
   position: relative;
   display: flex;
   flex-direction: column;
+  overflow: hidden;
 }
 
 .show-card:hover {
@@ -264,15 +248,42 @@ section {
   border-radius: 30px;
   text-transform: uppercase;
   letter-spacing: 1.5px;
+  z-index: 3;
 }
 
-.show-card img {
+.img-container {
   width: 100%;
   height: 190px;
-  object-fit: cover;
   border-radius: 6px;
+  overflow: hidden;
   margin-bottom: 1.4rem;
+  position: relative;
+}
+
+.img-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   filter: contrast(98%) brightness(95%);
+  transition: transform 0.7s cubic-bezier(0.25, 1, 0.5, 1), filter 0.7s ease;
+}
+
+.show-card:hover .img-container img {
+  transform: scale(1.08);
+  filter: contrast(105%) brightness(105%) saturate(1.1);
+}
+
+.img-container::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 50%, rgba(212, 175, 55, 0.2));
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.show-card:hover .img-container::after {
+  opacity: 1;
 }
 
 .show-duration {
@@ -332,7 +343,7 @@ section {
   transform: scale(1.05);
 }
 
-/* Formulario Cotizador */
+/* Cotizador */
 .quote-box {
   background: var(--bg-card);
   border: 1px solid rgba(255, 255, 255, 0.08);
@@ -379,6 +390,30 @@ footer {
   font-family: 'Cormorant Garamond', serif;
   font-size: 1.1rem;
   letter-spacing: 1px;
+}
+
+.bubble-hint {
+  position: fixed;
+  bottom: 25px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: rgba(18, 18, 22, 0.85);
+  border: 1px solid rgba(212, 175, 55, 0.4);
+  padding: 0.5rem 1.4rem;
+  border-radius: 30px;
+  font-size: 0.75rem;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  z-index: 20;
+  pointer-events: none;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.6);
+  animation: pulseHint 3s ease-in-out infinite;
+}
+
+@keyframes pulseHint {
+  0%, 100% { opacity: 0.7; transform: translateX(-50%) translateY(0); }
+  50% { opacity: 1; transform: translateX(-50%) translateY(-3px); }
 }
 
 @media (max-width: 768px) {
