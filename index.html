@@ -55,57 +55,38 @@
     .theater-glow {
       background: radial-gradient(circle at 50% 0%, rgba(59, 24, 95, 0.38) 0%, rgba(11, 9, 13, 0) 70%);
     }
-
-    /* Extensión suave de detalles al pasar el cursor (hover) o al seleccionar/tocar (.is-expanded) */
-    .show-details-panel {
-      display: grid;
-      grid-template-rows: 0fr;
-      opacity: 0;
-      transition: grid-template-rows 0.42s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.35s ease;
-    }
-    .show-card-interactive:hover .show-details-panel,
-    .show-card-interactive.is-expanded .show-details-panel {
-      grid-template-rows: 1fr;
-      opacity: 1;
-    }
-    .show-details-inner {
-      overflow: hidden;
-    }
   </style>
 </head>
 <body class="bg-obsidian text-bone antialiased selection:bg-gold selection:text-obsidian">
 
-  <!-- 1. NAVBAR MINIMALISTA -->
+  <!-- 1. NAVBAR DE NAVEGACIÓN ENTRE PÁGINAS -->
   <header class="fixed top-0 inset-x-0 z-50 bg-obsidian/85 backdrop-blur-lg border-b border-gold/15">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-2">
-      <a href="#" class="font-serif text-xl sm:text-3xl tracking-wider text-bone flex items-center gap-2 shrink-0">
+      <a href="index.html" class="font-serif text-xl sm:text-3xl tracking-wider text-bone flex items-center gap-2 shrink-0">
         <span class="text-gold">✦</span> IÑIGO
       </a>
 
-      <nav class="hidden lg:flex items-center gap-8 text-xs uppercase tracking-[0.2em] text-lavender">
-        <a href="#espectaculos" data-i18n="nav.shows" class="hover:text-gold transition-colors">Espectáculos</a>
-        <a href="#servicios" data-i18n="nav.events" class="hover:text-gold transition-colors">Eventos</a>
-        <a href="#sobre-inigo" data-i18n="nav.about" class="hover:text-gold transition-colors">Sobre Iñigo</a>
-        <a href="#galeria" data-i18n="nav.gallery" class="hover:text-gold transition-colors">Galería</a>
-        <a href="#contacto" data-i18n="nav.contact" class="hover:text-gold transition-colors">Contacto</a>
+      <nav class="flex items-center gap-5 sm:gap-8 text-xs uppercase tracking-[0.2em]">
+        <a href="index.html" data-i18n="nav.home" class="text-gold border-b border-gold pb-0.5 transition-colors">Inicio</a>
+        <a href="shows.html" data-i18n="nav.showsPage" class="text-lavender hover:text-gold transition-colors">Shows</a>
+        <a href="#contacto" data-i18n="nav.contact" class="hidden sm:inline text-lavender hover:text-gold transition-colors">Contacto</a>
       </nav>
 
       <div class="flex items-center gap-2 sm:gap-4 shrink-0">
-        <!-- Selector de Idioma -->
-        <button onclick="toggleLanguage()" id="lang-btn"
+        <button type="button" onclick="toggleLanguage()" id="lang-btn"
                 class="border border-lavender/30 text-lavender hover:text-gold hover:border-gold px-2.5 sm:px-3 py-2 text-[11px] sm:text-xs uppercase tracking-widest transition-colors rounded-sm cursor-pointer">
           EN / ES
         </button>
-        <a href="#contacto" data-i18n="nav.quote"
+        <a href="shows.html" data-i18n="nav.exploreShows"
            class="border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all duration-300 px-3.5 sm:px-5 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-[0.18em] font-medium rounded-sm">
-          Cotizar
+          Ver Shows
         </a>
       </div>
     </div>
   </header>
 
-  <!-- 2. HERO SECTION -->
-  <section class="relative pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-28 theater-glow">
+  <!-- 2. PRESENTACIÓN (HERO + MARQUEE) -->
+  <section class="relative pt-28 pb-16 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 theater-glow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
       
       <div class="lg:col-span-7 space-y-6 sm:space-y-7 text-center lg:text-left">
@@ -122,27 +103,22 @@
         </p>
 
         <div class="pt-2 flex flex-col sm:flex-row gap-4 justify-center lg:justify-start">
-          <button onclick="cotizarWhatsApp('Consulta general')" data-i18n="hero.btnWhatsApp"
-                  class="bg-gold text-obsidian hover:bg-gold/90 transition-all duration-300 px-7 sm:px-8 py-4 text-xs uppercase tracking-[0.2em] font-semibold rounded-sm shadow-lg shadow-gold/10 cursor-pointer">
+          <a href="shows.html" data-i18n="hero.btnShowsPage"
+             class="bg-gold text-obsidian hover:bg-gold/90 transition-all duration-300 px-7 sm:px-8 py-4 text-xs uppercase tracking-[0.2em] font-semibold rounded-sm shadow-lg shadow-gold/10 inline-flex items-center justify-center">
+            Ir a Shows →
+          </a>
+          <button type="button" onclick="cotizarWhatsApp('Consulta general')" data-i18n="hero.btnWhatsApp"
+                  class="border border-lavender/30 hover:border-gold text-bone px-7 sm:px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors rounded-sm cursor-pointer">
             Cotizar por WhatsApp
           </button>
-          <a href="#espectaculos" data-i18n="hero.btnExplore"
-             class="border border-lavender/30 hover:border-gold text-bone px-7 sm:px-8 py-4 text-xs uppercase tracking-[0.2em] transition-colors rounded-sm inline-flex items-center justify-center">
-            Explorar Espectáculos
-          </a>
         </div>
       </div>
 
       <div class="lg:col-span-5">
         <div class="relative aspect-[4/5] max-w-md mx-auto lg:max-w-none rounded-sm overflow-hidden border border-gold/30 bg-theater/20 shadow-2xl group">
           <img src="img/laboratorio-burbujas.jpg" alt="Iñigo en escena"
-               class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700"
-               onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';" />
-          <div class="hidden absolute inset-0 flex-col items-center justify-center p-8 text-center bg-gradient-to-b from-theater/40 to-obsidian">
-            <span class="font-serif text-5xl text-gold mb-3">✦</span>
-            <p data-i18n="hero.photoPlaceholder" class="font-serif text-2xl italic text-bone">Fotografía Principal de Escena</p>
-            <p data-i18n="hero.photoFormat" class="text-xs uppercase tracking-[0.2em] text-lavender mt-2">Formato vertical 4:5 · Alta Resolución</p>
-          </div>
+               onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80'"
+               class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
           <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-60 pointer-events-none"></div>
         </div>
       </div>
@@ -151,25 +127,72 @@
     <!-- Cinta Animada (Marquee) -->
     <div class="mt-16 sm:mt-20 border-y border-gold/20 bg-theater/15 py-4 overflow-hidden">
       <div id="marquee-container" class="animate-marquee flex items-center gap-10 sm:gap-12 text-xs uppercase tracking-[0.3em] text-gold/90">
-        <!-- Inyectado dinámicamente desde i18n.js -->
+        <!-- Inyectado desde i18n.js -->
       </div>
     </div>
   </section>
 
-  <!-- 3. ESPECTÁCULOS (SECCIONES DESPLEGABLES + TARJETAS EXTENSIBLES) -->
-  <section id="espectaculos" class="py-20 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-      <span data-i18n="shows.badge" class="text-xs uppercase tracking-[0.25em] text-gold">Catálogo Oficial</span>
-      <h2 data-i18n="shows.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-3 text-bone">Nuestros Espectáculos</h2>
-      <p data-i18n="shows.subtitle" class="text-lavender font-light mt-4 text-sm sm:text-base">Selecciona una categoría para desplegar sus espectáculos. Pasa el cursor o toca cada show para extender sus detalles.</p>
-    </div>
+  <!-- 3. CARRUSEL DE 2 VIDEOS DE YOUTUBE -->
+  <section id="videos-carrusel" class="py-20 sm:py-24 border-t border-gold/15">
+    <div class="max-w-5xl mx-auto px-4 sm:px-6">
+      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-12">
+        <span data-i18n="carousel.badge" class="text-xs uppercase tracking-[0.25em] text-gold">En Escena</span>
+        <h2 data-i18n="carousel.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-3 text-bone">Videos Destacados</h2>
+        <p data-i18n="carousel.subtitle" class="text-lavender font-light mt-3 text-sm sm:text-base">Explora ambos videos desde YouTube y haz clic para reproducir.</p>
+      </div>
 
-    <div id="shows-grid" class="space-y-5 sm:space-y-6">
-      <!-- Inyectado dinámicamente desde i18n.js y app.js -->
+      <div class="relative">
+        <div id="youtube-carousel-viewport" class="relative aspect-video w-full rounded-sm overflow-hidden border border-gold/30 bg-theater/20 shadow-2xl">
+          <!-- Renderizado dinámicamente por app.js -->
+        </div>
+
+        <!-- Controles Anterior / Siguiente + Indicadores -->
+        <div class="mt-5 flex items-center justify-between gap-4">
+          <button type="button" onclick="prevVideoSlide()" data-i18n="carousel.prev"
+                  class="border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-4 py-2.5 text-xs uppercase tracking-[0.18em] rounded-sm cursor-pointer">
+            ← Anterior
+          </button>
+
+          <div id="youtube-carousel-dots" class="flex items-center gap-3">
+            <!-- Indicadores renderizados por app.js -->
+          </div>
+
+          <button type="button" onclick="nextVideoSlide()" data-i18n="carousel.next"
+                  class="border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-4 py-2.5 text-xs uppercase tracking-[0.18em] rounded-sm cursor-pointer">
+            Siguiente →
+          </button>
+        </div>
+      </div>
     </div>
   </section>
 
-  <!-- 4. SERVICIOS POR TIPO DE EVENTO -->
+  <!-- 4. SOBRE IÑIGO -->
+  <section id="sobre-inigo" class="py-20 sm:py-24 border-t border-gold/15 max-w-7xl mx-auto px-4 sm:px-6">
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
+      <div class="lg:col-span-6 space-y-6">
+        <span data-i18n="about.badge" class="text-xs uppercase tracking-[0.25em] text-gold">Trayectoria Artística</span>
+        <h2 data-i18n="about.title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-bone">Sobre Iñigo</h2>
+        <p data-i18n="about.p1" class="text-lavender font-light leading-relaxed">...</p>
+        <p data-i18n="about.p2" class="text-lavender font-light leading-relaxed">...</p>
+        <blockquote data-i18n="about.quote" class="border-l-2 border-gold pl-5 sm:pl-6 py-2 font-serif italic text-xl sm:text-2xl text-bone">...</blockquote>
+        <div class="pt-2">
+          <a href="shows.html" data-i18n="about.ctaShows"
+             class="inline-flex items-center gap-2 border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all px-6 py-3 text-xs uppercase tracking-[0.2em] font-medium rounded-sm">
+            Explorar Catálogo de Shows →
+          </a>
+        </div>
+      </div>
+
+      <div class="lg:col-span-6 border border-gold/25 bg-theater/15 p-6 sm:p-8 md:p-10 rounded-sm">
+        <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl text-gold mb-6">¿Qué hace diferente mi trabajo?</h3>
+        <ul id="pillars-list" class="space-y-5">
+          <!-- Inyectado desde i18n.js -->
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5. EVENTOS A LOS QUE LLEGAMOS -->
   <section id="servicios" class="py-20 sm:py-24 border-y border-gold/15 bg-theater/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
@@ -178,101 +201,23 @@
       </div>
 
       <div id="services-grid" class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
-        <!-- Inyectado dinámicamente desde i18n.js -->
+        <!-- Inyectado desde i18n.js -->
       </div>
     </div>
   </section>
 
-  <!-- 5. SOBRE IÑIGO -->
-  <section id="sobre-inigo" class="py-20 sm:py-24 max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-start">
-      <div class="lg:col-span-6 space-y-6">
-        <span data-i18n="about.badge" class="text-xs uppercase tracking-[0.25em] text-gold">Trayectoria Artística</span>
-        <h2 data-i18n="about.title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-bone">Sobre Iñigo</h2>
-        <p data-i18n="about.p1" class="text-lavender font-light leading-relaxed">...</p>
-        <p data-i18n="about.p2" class="text-lavender font-light leading-relaxed">...</p>
-        <blockquote data-i18n="about.quote" class="border-l-2 border-gold pl-5 sm:pl-6 py-2 font-serif italic text-xl sm:text-2xl text-bone">...</blockquote>
-      </div>
-
-      <div class="lg:col-span-6 border border-gold/25 bg-theater/15 p-6 sm:p-8 md:p-10 rounded-sm">
-        <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl text-gold mb-6">¿Qué hace diferente mi trabajo?</h3>
-        <ul id="pillars-list" class="space-y-5">
-          <!-- Inyectado dinámicamente desde i18n.js -->
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 6. GALERÍA AUDIOVISUAL -->
-  <section id="galeria" class="py-20 sm:py-24 border-t border-gold/15">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-2xl mx-auto mb-12 sm:mb-16">
-        <span data-i18n="gallery.badge" class="text-xs uppercase tracking-[0.25em] text-gold">Archivo Visual</span>
-        <h2 data-i18n="gallery.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-3 text-bone">Galería Audiovisual</h2>
-        <p data-i18n="gallery.subtitle" class="text-lavender font-light mt-3 text-sm sm:text-base">Haz clic en cualquier fotografía para ampliarla o reproduce el reel escénico.</p>
-      </div>
-
-      <div class="grid grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5 mb-12">
-        <button onclick="openLightbox('img/laboratorio-burbujas.jpg', 0)" class="group relative aspect-[3/4] overflow-hidden border border-gold/20 rounded-sm cursor-pointer">
-          <img src="img/laboratorio-burbujas.jpg" alt="Laboratorio de Burbujas" onerror="this.src='https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-          <div class="absolute inset-0 bg-obsidian/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-xs uppercase tracking-widest text-gold">Ampliar ↗</span></div>
-        </button>
-        <button onclick="openLightbox('img/show-magia.jpg', 1)" class="group relative aspect-[3/4] overflow-hidden border border-gold/20 rounded-sm cursor-pointer">
-          <img src="img/show-magia.jpg" alt="Show de Magia" onerror="this.src='https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-          <div class="absolute inset-0 bg-obsidian/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-xs uppercase tracking-widest text-gold">Ampliar ↗</span></div>
-        </button>
-        <button onclick="openLightbox('img/magia-intima.jpg', 2)" class="group relative aspect-[3/4] overflow-hidden border border-gold/20 rounded-sm cursor-pointer">
-          <img src="img/magia-intima.jpg" alt="Magia Íntima" onerror="this.src='https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-          <div class="absolute inset-0 bg-obsidian/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-xs uppercase tracking-widest text-gold">Ampliar ↗</span></div>
-        </button>
-        <button onclick="openLightbox('img/gran-escenario.jpg', 3)" class="group relative aspect-[3/4] overflow-hidden border border-gold/20 rounded-sm cursor-pointer">
-          <img src="img/gran-escenario.jpg" alt="Gran Escenario" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=600&q=80'" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" />
-          <div class="absolute inset-0 bg-obsidian/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4"><span class="text-xs uppercase tracking-widest text-gold">Ampliar ↗</span></div>
-        </button>
-      </div>
-
-      <div class="max-w-4xl mx-auto">
-        <div id="video-facade" onclick="loadDeferredVideo('dQw4w9WgXcQ')"
-             class="relative aspect-video rounded-sm overflow-hidden border border-gold/30 bg-theater/20 cursor-pointer group flex items-center justify-center">
-          <img src="img/gran-escenario.jpg" alt="Video Showreel" onerror="this.src='https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=900&q=80'" class="absolute inset-0 w-full h-full object-cover opacity-50 group-hover:scale-105 transition-transform duration-700" />
-          <div class="relative z-10 text-center px-6">
-            <div class="w-16 h-16 mx-auto rounded-full border-2 border-gold bg-obsidian/80 text-gold flex items-center justify-center group-hover:bg-gold group-hover:text-obsidian transition-all mb-4">
-              <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-            </div>
-            <p data-i18n="gallery.videoTitle" class="font-serif text-xl sm:text-2xl text-bone">Ver Reel Oficial en Escena</p>
-            <p data-i18n="gallery.videoSub" class="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-lavender mt-1">Carga rápida optimizada · Haz clic para reproducir</p>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 7. TESTIMONIOS (Oculta por defecto mediante MOSTRAR_TESTIMONIOS = false) -->
+  <!-- TESTIMONIOS (Oculta por defecto) -->
   <section id="seccion-testimonios" class="hidden py-24 border-t border-gold/15 bg-theater/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-16">
         <span class="text-xs uppercase tracking-[0.25em] text-gold">Experiencias Reales</span>
         <h2 class="font-serif text-4xl md:text-5xl mt-3 text-bone">Voces del Público</h2>
       </div>
-      <div class="grid md:grid-cols-3 gap-8">
-        <div class="border border-gold/20 bg-obsidian p-8 rounded-sm">
-          <p class="text-lavender font-light italic mb-6">“Un espectáculo impecable...”</p>
-          <p class="font-serif text-lg text-gold">Camila Restrepo</p>
-        </div>
-        <div class="border border-gold/20 bg-obsidian p-8 rounded-sm">
-          <p class="text-lavender font-light italic mb-6">“El momento de las burbujas...”</p>
-          <p class="font-serif text-lg text-gold">Andrés Martínez</p>
-        </div>
-        <div class="border border-gold/20 bg-obsidian p-8 rounded-sm">
-          <p class="text-lavender font-light italic mb-6">“Puntual, elegante...”</p>
-          <p class="font-serif text-lg text-gold">Valeria Gómez</p>
-        </div>
-      </div>
     </div>
   </section>
 
-  <!-- 8. CONTACTO Y COTIZACIONES -->
-  <section id="contacto" class="py-20 sm:py-24 border-t border-gold/15 theater-glow">
+  <!-- 6. CONTACTO Y COTIZACIONES (AL FINAL DE INICIO) -->
+  <section id="contacto" class="py-20 sm:py-24 theater-glow">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="grid lg:grid-cols-12 gap-10 lg:gap-12 items-center">
         
@@ -297,16 +242,12 @@
             <div class="grid sm:grid-cols-2 gap-5">
               <div>
                 <label data-i18n="contact.labelEventType" for="tipo-evento" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Tipo de Evento</label>
-                <select id="tipo-evento" required class="w-full bg-obsidian border border-lavender/20 focus:border-gold px-4 py-3 text-bone outline-none transition-colors rounded-sm">
-                  <!-- Llenado dinámico vía JS -->
-                </select>
+                <select id="tipo-evento" required class="w-full bg-obsidian border border-lavender/20 focus:border-gold px-4 py-3 text-bone outline-none transition-colors rounded-sm"></select>
               </div>
 
               <div>
                 <label data-i18n="contact.labelShow" for="show-interes" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Show de Interés</label>
-                <select id="show-interes" required class="w-full bg-obsidian border border-lavender/20 focus:border-gold px-4 py-3 text-bone outline-none transition-colors rounded-sm">
-                  <!-- Llenado dinámico vía JS -->
-                </select>
+                <select id="show-interes" required class="w-full bg-obsidian border border-lavender/20 focus:border-gold px-4 py-3 text-bone outline-none transition-colors rounded-sm"></select>
               </div>
             </div>
 
@@ -334,23 +275,16 @@
     </div>
   </section>
 
-  <!-- FOOTER -->
-  <footer class="border-t border-gold/15 py-10 text-center text-xs tracking-[0.2em] uppercase text-lavender px-4">
+  <!-- FOOTER CON NAVEGACIÓN ENTRE PÁGINAS -->
+  <footer class="border-t border-gold/15 py-10 text-center text-xs tracking-[0.2em] uppercase text-lavender px-4 space-y-4">
+    <div class="flex justify-center gap-6">
+      <a href="index.html" data-i18n="nav.home" class="hover:text-gold transition-colors">Inicio</a>
+      <a href="shows.html" data-i18n="nav.showsPage" class="hover:text-gold transition-colors">Shows</a>
+      <a href="#contacto" data-i18n="nav.contact" class="hover:text-gold transition-colors">Contacto</a>
+    </div>
     <p data-i18n="footer">© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados</p>
   </footer>
 
-  <!-- LIGHTBOX -->
-  <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-obsidian/95 backdrop-blur-md items-center justify-center p-4 sm:p-6">
-    <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
-      <button data-i18n="lightboxClose" onclick="closeLightbox()" class="absolute -top-10 right-0 text-gold text-sm uppercase tracking-widest hover:underline cursor-pointer">
-        Cerrar [✕]
-      </button>
-      <img id="lightbox-img" src="" alt="Vista ampliada" class="max-h-[80vh] mx-auto border border-gold/40 rounded-sm shadow-2xl" />
-      <p id="lightbox-caption" class="font-serif italic text-xl text-bone mt-4"></p>
-    </div>
-  </div>
-
-  <!-- Carga obligatoria en orden: i18n.js primero, app.js después -->
   <script src="i18n.js"></script>
   <script src="app.js"></script>
 </body>

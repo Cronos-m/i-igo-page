@@ -1,14 +1,16 @@
 // =========================================================================
 // CONFIGURACIÓN PRINCIPAL - IÑIGO ILUSIONISTA Y BURBUJÓLOGO
 // =========================================================================
-const WHATSAPP_NUMBER = "+573229261864"; // Reemplaza con tu número oficial
+const WHATSAPP_NUMBER = "573000000000"; // Reemplaza con tu número real
 const MOSTRAR_TESTIMONIOS = false;
 let currentLang = "es";
 
-// Estado de categorías desplegadas (ninguna o las que el usuario abra)
-const openCategories = new Set();
+// Estado del carrusel de 2 videos de YouTube
+let currentVideoIndex = 0;
+let playingVideoIndex = null;
 
-// Estado de tarjetas de show extendidas al tocar/seleccionar en móvil o clic
+// Estado de categorías desplegadas y tarjetas extendidas en shows.html
+const openCategories = new Set();
 const expandedShowCards = new Set();
 
 document.addEventListener("DOMContentLoaded", () => {
@@ -21,10 +23,92 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function toggleLanguage() {
   currentLang = currentLang === "es" ? "en" : "es";
-  document.getElementById("lang-btn").textContent = currentLang === "es" ? "EN / ES" : "ES / EN";
+  const langBtn = document.getElementById("lang-btn");
+  if (langBtn) {
+    langBtn.textContent = currentLang === "es" ? "EN / ES" : "ES / EN";
+  }
   updateContent();
 }
 
+// =========================================================================
+// CARRUSEL DE 2 VIDEOS DE YOUTUBE (EN INICIO)
+// =========================================================================
+function setVideoSlide(index) {
+  const videos = translations[currentLang].carousel.videos;
+  const total = videos.length;
+  currentVideoIndex = ((index % total) + total) % total;
+  playingVideoIndex = null;
+  renderVideoCarousel();
+}
+
+function prevVideoSlide() {
+  setVideoSlide(currentVideoIndex - 1);
+}
+
+function nextVideoSlide() {
+  setVideoSlide(currentVideoIndex + 1);
+}
+
+function playCarouselVideo(index) {
+  playingVideoIndex = index;
+  renderVideoCarousel();
+}
+
+function renderVideoCarousel() {
+  const viewport = document.getElementById("youtube-carousel-viewport");
+  const dotsContainer = document.getElementById("youtube-carousel-dots");
+  if (!viewport) return;
+
+  const t = translations[currentLang];
+  const videos = t.carousel.videos;
+  const video = videos[currentVideoIndex];
+
+  if (playingVideoIndex === currentVideoIndex) {
+    viewport.innerHTML = `
+      <iframe class="w-full h-full"
+              src="https://www.youtube.com/embed/${video.id}?autoplay=1&rel=0"
+              title="${video.title}"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen>
+      </iframe>
+    `;
+  } else {
+    viewport.innerHTML = `
+      <button type="button" onclick="playCarouselVideo(${currentVideoIndex})"
+              class="relative w-full h-full flex items-center justify-center cursor-pointer group text-center">
+        <img src="${video.poster}"
+             alt="${video.title}"
+             onerror="this.src='${video.fallbackPoster}'"
+             class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-700" />
+        <div class="relative z-10 px-6">
+          <div class="w-16 h-16 mx-auto rounded-full border-2 border-gold bg-obsidian/85 text-gold flex items-center justify-center group-hover:bg-gold group-hover:text-obsidian transition-all mb-4">
+            <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          </div>
+          <p class="font-serif text-xl sm:text-2xl text-bone">${video.title}</p>
+          <p class="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-lavender mt-1">${t.carousel.playHint}</p>
+        </div>
+      </button>
+    `;
+  }
+
+  if (dotsContainer) {
+    dotsContainer.innerHTML = videos.map((v, idx) => {
+      const active = idx === currentVideoIndex;
+      return `
+        <button type="button"
+                onclick="setVideoSlide(${idx})"
+                aria-label="Video ${idx + 1}"
+                class="h-2.5 rounded-full transition-all cursor-pointer ${active ? 'w-8 bg-gold' : 'w-2.5 bg-lavender/40 hover:bg-gold/60'}">
+        </button>
+      `;
+    }).join("");
+  }
+}
+
+// =========================================================================
+// SECCIÓN DESPLEGABLE DE SHOWS (EN SHOWS.HTML)
+// =========================================================================
 function toggleCategory(catId) {
   if (openCategories.has(catId)) {
     openCategories.delete(catId);
@@ -35,7 +119,6 @@ function toggleCategory(catId) {
 }
 
 function toggleShowCard(cardKey, event) {
-  // Evitar colapsar/expandir si el usuario pulsó directamente el botón de WhatsApp
   if (event && event.target.closest("button[data-whatsapp-btn]")) {
     return;
   }
@@ -72,16 +155,15 @@ function renderShowsSection() {
 
     html += `
       <div class="border ${isOpen ? 'border-gold/60 bg-theater/15' : 'border-gold/25 bg-theater/10 hover:border-gold/50'} rounded-sm transition-all duration-300 overflow-hidden">
-        <!-- Encabezado Desplegable de la Categoría -->
         <button type="button"
                 onclick="toggleCategory('${cat.id}')"
                 aria-expanded="${isOpen}"
                 class="w-full text-left p-5 sm:p-7 md:px-8 flex items-center justify-between gap-4 cursor-pointer focus:outline-none group">
           <div class="flex items-baseline gap-3 sm:gap-4">
             <span class="font-serif italic text-xl sm:text-2xl text-gold/80">0${catIndex + 1}.</span>
-            <h3 class="font-serif text-2xl sm:text-3xl md:text-4xl text-bone group-hover:text-gold transition-colors">
+            <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl text-bone group-hover:text-gold transition-colors">
               ${cat.title}
-            </h3>
+            </h2>
           </div>
 
           <div class="flex items-center gap-3 shrink-0">
@@ -94,7 +176,6 @@ function renderShowsSection() {
           </div>
         </button>
 
-        <!-- Contenido Desplegable de la Categoría -->
         <div class="${isOpen ? 'block' : 'hidden'} px-5 sm:px-7 md:px-8 pb-7 sm:pb-8 pt-1 border-t border-gold/15">
           <p class="text-lavender font-light text-sm sm:text-base max-w-4xl leading-relaxed mt-4 mb-8">
             ${cat.intro}
@@ -111,7 +192,6 @@ function renderShowsSection() {
                          onclick="toggleShowCard('${cardKey}', event)"
                          class="show-card-interactive ${isExpanded ? 'is-expanded border-gold/70' : 'border-gold/20'} bg-obsidian/90 hover:border-gold/60 transition-all duration-300 rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer group shadow-lg">
                   
-                  <!-- Fotografía del Show -->
                   <div class="relative aspect-[16/10] w-full overflow-hidden bg-theater/25 border-b border-gold/15">
                     <img src="${item.img}"
                          alt="${item.title}"
@@ -123,13 +203,12 @@ function renderShowsSection() {
                     </span>
                   </div>
 
-                  <!-- Cabecera Visible + Panel de Detalles Extensible -->
                   <div class="p-5 sm:p-6 flex-1 flex flex-col justify-between">
                     <div>
                       <div class="flex items-start justify-between gap-3">
-                        <h4 class="font-serif text-2xl text-bone group-hover:text-gold transition-colors">
+                        <h3 class="font-serif text-2xl text-bone group-hover:text-gold transition-colors">
                           ${item.title}
-                        </h4>
+                        </h3>
                         <span class="text-[11px] uppercase tracking-wider text-gold/80 shrink-0 pt-1">
                           ${isExpanded ? '−' : '+'}
                         </span>
@@ -139,7 +218,6 @@ function renderShowsSection() {
                         ${t.shows.expandHint}
                       </p>
 
-                      <!-- Detalles Extendidos al pasar cursor o seleccionar -->
                       <div class="show-details-panel mt-3">
                         <div class="show-details-inner space-y-4">
                           <p class="text-lavender font-light text-sm leading-relaxed">
@@ -173,10 +251,12 @@ function renderShowsSection() {
   showsGrid.innerHTML = html;
 }
 
+// =========================================================================
+// RENDERIZADO GENERAL Y TRADUCCIÓN
+// =========================================================================
 function updateContent() {
   const t = translations[currentLang];
 
-  // 1. Traducir elementos estáticos con data-i18n
   document.querySelectorAll("[data-i18n]").forEach(el => {
     const keys = el.getAttribute("data-i18n").split(".");
     let val = t;
@@ -184,7 +264,6 @@ function updateContent() {
     if (val) el.innerHTML = val;
   });
 
-  // 2. Traducir placeholders con data-i18n-placeholder
   document.querySelectorAll("[data-i18n-placeholder]").forEach(el => {
     const keys = el.getAttribute("data-i18n-placeholder").split(".");
     let val = t;
@@ -192,7 +271,6 @@ function updateContent() {
     if (val) el.placeholder = val;
   });
 
-  // 3. Renderizar cinta marquee
   const marqueeContainer = document.getElementById("marquee-container");
   if (marqueeContainer) {
     let marqueeHTML = "";
@@ -203,10 +281,9 @@ function updateContent() {
     marqueeContainer.innerHTML = marqueeHTML;
   }
 
-  // 4. Renderizar sección desplegable de espectáculos
+  renderVideoCarousel();
   renderShowsSection();
 
-  // 5. Renderizar servicios por tipo de evento
   const servicesGrid = document.getElementById("services-grid");
   if (servicesGrid) {
     let servHTML = "";
@@ -228,7 +305,6 @@ function updateContent() {
     servicesGrid.innerHTML = servHTML;
   }
 
-  // 6. Renderizar los 5 pilares diferenciales
   const pillarsList = document.getElementById("pillars-list");
   if (pillarsList) {
     let pillarsHTML = "";
@@ -246,7 +322,6 @@ function updateContent() {
     pillarsList.innerHTML = pillarsHTML;
   }
 
-  // 7. Actualizar selects del formulario de contacto
   const selectEvent = document.getElementById("tipo-evento");
   const selectShow = document.getElementById("show-interes");
   if (selectEvent && selectShow) {
@@ -256,12 +331,12 @@ function updateContent() {
 }
 
 // =========================================================================
-// WHATSAPP & LIGHTBOX
+// WHATSAPP
 // =========================================================================
 function cotizarWhatsApp(nombreShow) {
   const mensaje = currentLang === "es"
-    ? `¡Hola Iñigo!  Me encantaría recibir información y cotización para el espectáculo:\n• *${nombreShow}*\n\nQuedo atento a tu disponibilidad. ¡Gracias!`
-    : `Hello Iñigo!  I would love to receive information and a quote for the show:\n• *${nombreShow}*\n\nI look forward to your availability. Thank you!`;
+    ? `¡Hola Iñigo! ✨ Me encantaría recibir información y cotización para el espectáculo:\n• *${nombreShow}*\n\nQuedo atento a tu disponibilidad. ¡Gracias!`
+    : `Hello Iñigo! ✨ I would love to receive information and a quote for the show:\n• *${nombreShow}*\n\nI look forward to your availability. Thank you!`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
 }
 
@@ -278,30 +353,4 @@ function enviarFormularioWhatsApp(event) {
     : `Hello Iñigo! ✨ I would like to quote a show with the following details:\n\n• *Name:* ${nombre}\n• *Event Type:* ${tipoEvento}\n• *Show of Interest:* ${showInteres}\n• *City / Country:* ${ciudad}\n• *Tentative Date:* ${fecha}\n\nThank you very much!`;
 
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
-}
-
-function openLightbox(src, indexCaption) {
-  const t = translations[currentLang];
-  const modal = document.getElementById("lightbox-modal");
-  const imgEl = document.getElementById("lightbox-img");
-  imgEl.src = src;
-  imgEl.onerror = function () {
-    this.src = getFallbackImage(src);
-  };
-  document.getElementById("lightbox-caption").textContent = t.gallery.captions[indexCaption];
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function closeLightbox() {
-  document.getElementById("lightbox-modal").classList.add("hidden");
-  document.getElementById("lightbox-modal").classList.remove("flex");
-}
-
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });
-
-function loadDeferredVideo(youtubeId) {
-  document.getElementById("video-facade").innerHTML = `
-    <iframe class="w-full h-full" src="https://www.youtube.com/embed/${youtubeId}?autoplay=1&rel=0" title="Showreel" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-  `;
 }

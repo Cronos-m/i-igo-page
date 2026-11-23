@@ -1,11 +1,10 @@
 const translations = {
   es: {
     nav: {
-      shows: "Espectáculos",
-      events: "Eventos",
-      about: "Sobre Iñigo",
-      gallery: "Galería",
+      home: "Inicio",
+      showsPage: "Shows",
       contact: "Contacto",
+      exploreShows: "Ver Shows",
       quote: "Cotizar"
     },
     hero: {
@@ -14,10 +13,8 @@ const translations = {
       titleAccent: "sentir lo imposible",
       titlePart2: "”",
       subtitle: "Magia, ilusionismo y arte de las burbujas para eventos, escenarios y experiencias especiales.",
-      btnWhatsApp: "Cotizar por WhatsApp",
-      btnExplore: "Explorar Espectáculos",
-      photoPlaceholder: "Fotografía Principal de Escena",
-      photoFormat: "Formato vertical 4:5 · Alta Resolución"
+      btnShowsPage: "Ir a Shows →",
+      btnWhatsApp: "Cotizar por WhatsApp"
     },
     marquee: [
       "Ilusionismo Contemporáneo",
@@ -27,13 +24,34 @@ const translations = {
       "Experiencias Sensoriales",
       "Teatros y Festivales"
     ],
+    carousel: {
+      badge: "En Escena",
+      title: "Videos Destacados",
+      subtitle: "Cambia entre ambos videos de YouTube y haz clic para reproducir.",
+      prev: "← Anterior",
+      next: "Siguiente →",
+      playHint: "Haz clic para reproducir en YouTube",
+      videos: [
+        {
+          id: "dQw4w9WgXcQ",
+          title: "Reel Escénico · Magia e Ilusionismo",
+          poster: "img/show-magia.jpg",
+          fallbackPoster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "dQw4w9WgXcQ",
+          title: "Arte de las Burbujas Gigantes en Escena",
+          poster: "img/laboratorio-burbujas.jpg",
+          fallbackPoster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80"
+        }
+      ]
+    },
     shows: {
       badge: "Catálogo Oficial",
       title: "Nuestros Espectáculos",
       subtitle: "Selecciona una categoría para desplegar sus espectáculos. Pasa el cursor o toca cada show para extender sus detalles.",
       btnRequest: "Solicitar este show",
       expandHint: "Pasa el cursor o toca para ver detalles",
-      collapseHint: "Detalles extendidos",
       openCategoryLabel: "Desplegar categoría",
       closeCategoryLabel: "Ocultar categoría",
       categories: [
@@ -199,6 +217,7 @@ const translations = {
       p1: "Con más de una década dedicada al estudio y la puesta en escena del ilusionismo y el arte efímero de las burbujas, Iñigo ha construido un lenguaje propio donde la técnica clásica se encuentra con la poesía visual contemporánea.",
       p2: "Su trabajo trasciende el truco convencional para convertirse en una experiencia sensorial completa: cada movimiento, cada pausa y cada esfera iridiscente están pensados para devolverle al público la capacidad genuina de maravillarse.",
       quote: "“No busco engañar a los ojos, sino invitar al corazón a recordar cómo se siente creer en lo extraordinario.”",
+      ctaShows: "Explorar Catálogo de Shows →",
       pillarsTitle: "¿Qué hace diferente mi trabajo?",
       pillars: [
         { title: "Estética Teatral Cuidada", desc: "Vestuario, utilería e iluminación diseñados con rigor artístico para elevar la atmósfera de cualquier evento." },
@@ -206,19 +225,6 @@ const translations = {
         { title: "Fórmulas Propias de Burbujología", desc: "Estructuras gigantes, burbujas con vapor y esculturas aéreas de alta resistencia y brillo iridiscente." },
         { title: "Versatilidad Intergeneracional", desc: "Espectáculos diseñados para cautivar tanto la inocencia de los niños como la exigencia del público adulto." },
         { title: "Producción Autónoma y Puntual", desc: "Equipamiento técnico propio, adaptación a espacios interiores o exteriores y cumplimiento impecable." }
-      ]
-    },
-    gallery: {
-      badge: "Archivo Visual",
-      title: "Galería Audiovisual",
-      subtitle: "Haz clic en cualquier fotografía para ampliarla o reproduce el reel escénico.",
-      videoTitle: "Ver Reel Oficial en Escena",
-      videoSub: "Carga rápida optimizada · Haz clic para reproducir",
-      captions: [
-        "Laboratorio de Burbujas Gigantes",
-        "Ilusionismo en Escena",
-        "Magia Íntima y de Cercanía",
-        "Gran Escenario y Festivales"
       ]
     },
     contact: {
@@ -252,16 +258,14 @@ const translations = {
         "El Circo de las Burbujas"
       ]
     },
-    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados",
-    lightboxClose: "Cerrar [✕]"
+    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados"
   },
   en: {
     nav: {
-      shows: "Shows",
-      events: "Events",
-      about: "About Iñigo",
-      gallery: "Gallery",
+      home: "Home",
+      showsPage: "Shows",
       contact: "Contact",
+      exploreShows: "See Shows",
       quote: "Get Quote"
     },
     hero: {
@@ -270,10 +274,8 @@ const translations = {
       titleAccent: "to feel the impossible",
       titlePart2: "”",
       subtitle: "Magic, illusionism, and bubble art for events, stages, and special experiences.",
-      btnWhatsApp: "Get Quote via WhatsApp",
-      btnExplore: "Explore Shows",
-      photoPlaceholder: "Main Stage Photography",
-      photoFormat: "Vertical format 4:5 · High Resolution"
+      btnShowsPage: "Go to Shows →",
+      btnWhatsApp: "Get Quote via WhatsApp"
     },
     marquee: [
       "Contemporary Illusionism",
@@ -283,13 +285,34 @@ const translations = {
       "Sensory Experiences",
       "Theaters & Festivals"
     ],
+    carousel: {
+      badge: "On Stage",
+      title: "Featured Videos",
+      subtitle: "Switch between both YouTube videos and click to play.",
+      prev: "← Previous",
+      next: "Next →",
+      playHint: "Click to play on YouTube",
+      videos: [
+        {
+          id: "dQw4w9WgXcQ",
+          title: "Stage Reel · Magic & Illusionism",
+          poster: "img/show-magia.jpg",
+          fallbackPoster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80"
+        },
+        {
+          id: "dQw4w9WgXcQ",
+          title: "Giant Bubble Art on Stage",
+          poster: "img/laboratorio-burbujas.jpg",
+          fallbackPoster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80"
+        }
+      ]
+    },
     shows: {
       badge: "Official Catalog",
       title: "Our Shows",
       subtitle: "Select a category to unfold its shows. Hover or tap each show to expand its details.",
       btnRequest: "Request this show",
       expandHint: "Hover or tap to view details",
-      collapseHint: "Details expanded",
       openCategoryLabel: "Open category",
       closeCategoryLabel: "Hide category",
       categories: [
@@ -455,6 +478,7 @@ const translations = {
       p1: "With over a decade dedicated to the study and staging of illusionism and the ephemeral art of bubbles, Iñigo has built a unique language where classical technique meets contemporary visual poetry.",
       p2: "His work transcends the conventional trick to become a complete sensory experience: every movement, every pause, and every iridescent sphere is designed to restore the audience's genuine capacity to marvel.",
       quote: "“I don't seek to fool the eyes, but to invite the heart to remember what it feels like to believe in the extraordinary.”",
+      ctaShows: "Explore Shows Catalog →",
       pillarsTitle: "What makes my work different?",
       pillars: [
         { title: "Refined Theatrical Aesthetics", desc: "Costumes, props, and lighting designed with artistic rigor to elevate the atmosphere of any event." },
@@ -462,19 +486,6 @@ const translations = {
         { title: "Custom Bubble Formulas", desc: "Giant structures, vapor-filled bubbles, and high-strength aerial sculptures with iridescent shine." },
         { title: "Intergenerational Versatility", desc: "Performances designed to captivate both the innocence of children and the refinement of adults." },
         { title: "Autonomous & Timely Production", desc: "Own technical equipment, adaptability to indoor/outdoor spaces, and flawless execution." }
-      ]
-    },
-    gallery: {
-      badge: "Visual Archive",
-      title: "Audiovisual Gallery",
-      subtitle: "Click on any photograph to enlarge it or play the stage reel.",
-      videoTitle: "Watch Official Stage Reel",
-      videoSub: "Optimized fast load · Click to play",
-      captions: [
-        "Giant Bubble Laboratory",
-        "Illusionism on Stage",
-        "Intimate Close-up Magic",
-        "Grand Stage & Festivals"
       ]
     },
     contact: {
@@ -508,7 +519,6 @@ const translations = {
         "The Bubble Circus"
       ]
     },
-    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved",
-    lightboxClose: "Close [✕]"
+    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved"
   }
 };
