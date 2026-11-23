@@ -260,8 +260,8 @@ function updateContent() {
 // =========================================================================
 function cotizarWhatsApp(nombreShow) {
   const mensaje = currentLang === "es"
-    ? `¡Hola Iñigo! ✨ Me encantaría recibir información y cotización para el espectáculo:\n• *${nombreShow}*\n\nQuedo atento a tu disponibilidad. ¡Gracias!`
-    : `Hello Iñigo! ✨ I would love to receive information and a quote for the show:\n• *${nombreShow}*\n\nI look forward to your availability. Thank you!`;
+    ? `¡Hola Iñigo!  Me encantaría recibir información y cotización para el espectáculo:\n• *${nombreShow}*\n\nQuedo atento a tu disponibilidad. ¡Gracias!`
+    : `Hello Iñigo!  I would love to receive information and a quote for the show:\n• *${nombreShow}*\n\nI look forward to your availability. Thank you!`;
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
 }
 
