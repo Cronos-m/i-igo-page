@@ -5,7 +5,58 @@ const WHATSAPP_NUMBER = "573000000000"; // Reemplaza con tu número real
 const MOSTRAR_TESTIMONIOS = false;
 let currentLang = "es";
 
-// Estado del carrusel de 2 videos de YouTube
+// =========================================================================
+// MAPA CENTRAL DE IMÁGENES (CARPETA img/ · camelCase.png)
+// =========================================================================
+const SITE_IMAGES = {
+  hero: {
+    src: "img/fotoPrincipal.png",
+    alt: "Iñigo en escena"
+  },
+  videoCarousel: [
+    {
+      poster: "img/portadaShow.png"
+    },
+    {
+      poster: "img/portadaBurbujas.png"
+    }
+  ],
+  gallery: [
+    {
+      src: "img/galeriaUno.png",
+      alt: "Laboratorio de Burbujas"
+    },
+    {
+      src: "img/galeriaDos.png",
+      alt: "Show de Magia"
+    },
+    {
+      src: "img/galeriaTres.png",
+      alt: "Magia Íntima"
+    },
+    {
+      src: "img/galeriaCuatro.png",
+      alt: "Gran Escenario"
+    }
+  ],
+  shows: {
+    "magia-0": { src: "img/elViajeMagico.png" },
+    "magia-1": { src: "img/secretosAContraluz.png" },
+    "magia-2": { src: "img/magiaParaTodaLaFamilia.png" },
+    "magia-3": { src: "img/magiaDeCerca.png" },
+    "burbujas-0": { src: "img/showDeBurbujas.png" },
+    "burbujas-1": { src: "img/laboratorioDeBurbujas.png" },
+    "burbujas-2": { src: "img/burbujasAlViento.png" },
+    "burbujas-3": { src: "img/animacionConBurbujas.png" },
+    "magia-burbujas-0": { src: "img/magiaMasShowDeBurbujas.png" },
+    "magia-burbujas-1": { src: "img/magiaMasShowDeBurbujasMasAnimacion.png" },
+    "experiencias-especiales-0": { src: "img/laLevedadDelMomentoMagico.png" },
+    "experiencias-especiales-1": { src: "img/violinMasBurbujas.png" },
+    "experiencias-especiales-2": { src: "img/elCircoDeLasBurbujas.png" }
+  }
+};
+
+// Estado del carrusel de 2 videos de YouTube (sin reproducción automática)
 let currentVideoIndex = 0;
 let playingVideoIndex = null;
 
@@ -28,6 +79,44 @@ function toggleLanguage() {
     langBtn.textContent = currentLang === "es" ? "EN / ES" : "ES / EN";
   }
   updateContent();
+}
+
+function applyImageSrc(imgElement, src, altText) {
+  if (!imgElement || !src) return;
+  if (altText) imgElement.alt = altText;
+  imgElement.src = src;
+}
+
+// =========================================================================
+// FOTO PRINCIPAL (HERO) Y GALERÍA AUDIOVISUAL (EN INICIO)
+// =========================================================================
+function renderHeroImage() {
+  const heroImg = document.getElementById("hero-img");
+  if (heroImg && SITE_IMAGES.hero) {
+    applyImageSrc(heroImg, SITE_IMAGES.hero.src, SITE_IMAGES.hero.alt);
+  }
+}
+
+function renderGallerySection() {
+  const galleryGrid = document.getElementById("gallery-grid");
+  if (!galleryGrid) return;
+
+  const t = translations[currentLang];
+  galleryGrid.innerHTML = SITE_IMAGES.gallery.map((item, idx) => {
+    const caption = t.gallery.captions[idx] || item.alt;
+    return `
+      <button type="button"
+              onclick="openLightbox('${item.src}', ${idx})"
+              class="group relative aspect-[3/4] w-full overflow-hidden border border-gold/20 rounded-sm cursor-pointer bg-theater/15">
+        <img src="${item.src}"
+             alt="${caption}"
+             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
+        <div class="absolute inset-0 bg-obsidian/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
+          <span class="text-xs uppercase tracking-widest text-gold">${t.gallery.zoomLabel}</span>
+        </div>
+      </button>
+    `;
+  }).join("");
 }
 
 // =========================================================================
@@ -62,6 +151,8 @@ function renderVideoCarousel() {
   const t = translations[currentLang];
   const videos = t.carousel.videos;
   const video = videos[currentVideoIndex];
+  const posterObj = SITE_IMAGES.videoCarousel[currentVideoIndex] || {};
+  const posterSrc = posterObj.poster || "img/portadaShow.png";
 
   if (playingVideoIndex === currentVideoIndex) {
     viewport.innerHTML = `
@@ -76,17 +167,17 @@ function renderVideoCarousel() {
   } else {
     viewport.innerHTML = `
       <button type="button" onclick="playCarouselVideo(${currentVideoIndex})"
-              class="relative w-full h-full flex items-center justify-center cursor-pointer group text-center">
-        <img src="${video.poster}"
+              class="relative w-full h-full flex items-center justify-center cursor-pointer group text-center bg-theater/25">
+        <img src="${posterSrc}"
              alt="${video.title}"
-             onerror="this.src='${video.fallbackPoster}'"
-             class="absolute inset-0 w-full h-full object-cover opacity-55 group-hover:scale-105 transition-transform duration-700" />
-        <div class="relative z-10 px-6">
-          <div class="w-16 h-16 mx-auto rounded-full border-2 border-gold bg-obsidian/85 text-gold flex items-center justify-center group-hover:bg-gold group-hover:text-obsidian transition-all mb-4">
-            <svg class="w-6 h-6 ml-1" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 group-hover:scale-105 transition-transform duration-700" />
+        <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-obsidian/25 to-transparent pointer-events-none"></div>
+        <div class="relative z-10 px-4 sm:px-6 max-w-full">
+          <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full border-2 border-gold bg-obsidian/85 text-gold flex items-center justify-center group-hover:bg-gold group-hover:text-obsidian transition-all mb-3 sm:mb-4">
+            <svg class="w-5 h-5 sm:w-6 sm:h-6 ml-0.5" fill="currentColor" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
           </div>
-          <p class="font-serif text-xl sm:text-2xl text-bone">${video.title}</p>
-          <p class="text-[11px] sm:text-xs uppercase tracking-[0.2em] text-lavender mt-1">${t.carousel.playHint}</p>
+          <p class="font-serif text-lg sm:text-2xl text-bone">${video.title}</p>
+          <p class="text-[10px] sm:text-xs uppercase tracking-[0.18em] sm:tracking-[0.2em] text-lavender mt-1">${t.carousel.playHint}</p>
         </div>
       </button>
     `;
@@ -99,7 +190,7 @@ function renderVideoCarousel() {
         <button type="button"
                 onclick="setVideoSlide(${idx})"
                 aria-label="Video ${idx + 1}"
-                class="h-2.5 rounded-full transition-all cursor-pointer ${active ? 'w-8 bg-gold' : 'w-2.5 bg-lavender/40 hover:bg-gold/60'}">
+                class="h-2.5 rounded-full transition-all cursor-pointer ${active ? 'w-7 sm:w-8 bg-gold' : 'w-2.5 bg-lavender/40 hover:bg-gold/60'}">
         </button>
       `;
     }).join("");
@@ -133,16 +224,6 @@ function toggleShowCard(cardKey, event) {
   }
 }
 
-function getFallbackImage(imgPath) {
-  const fallbacks = {
-    "img/laboratorio-burbujas.jpg": "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=800&q=80",
-    "img/show-magia.jpg": "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=800&q=80",
-    "img/magia-intima.jpg": "https://images.unsplash.com/photo-1514525253161-7a46d19cd819?auto=format&fit=crop&w=800&q=80",
-    "img/gran-escenario.jpg": "https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&w=800&q=80"
-  };
-  return fallbacks[imgPath] || fallbacks["img/show-magia.jpg"];
-}
-
 function renderShowsSection() {
   const t = translations[currentLang];
   const showsGrid = document.getElementById("shows-grid");
@@ -154,48 +235,47 @@ function renderShowsSection() {
     const isOpen = openCategories.has(cat.id);
 
     html += `
-      <div class="border ${isOpen ? 'border-gold/60 bg-theater/15' : 'border-gold/25 bg-theater/10 hover:border-gold/50'} rounded-sm transition-all duration-300 overflow-hidden">
+      <div class="border ${isOpen ? 'border-gold/60 bg-theater/15' : 'border-gold/25 bg-theater/10 hover:border-gold/50'} rounded-sm transition-all duration-300 overflow-hidden min-w-0">
         <button type="button"
                 onclick="toggleCategory('${cat.id}')"
                 aria-expanded="${isOpen}"
-                class="w-full text-left p-5 sm:p-7 md:px-8 flex items-center justify-between gap-4 cursor-pointer focus:outline-none group">
-          <div class="flex items-baseline gap-3 sm:gap-4">
-            <span class="font-serif italic text-xl sm:text-2xl text-gold/80">0${catIndex + 1}.</span>
-            <h2 class="font-serif text-2xl sm:text-3xl md:text-4xl text-bone group-hover:text-gold transition-colors">
+                class="w-full text-left p-4 sm:p-6 md:px-8 flex items-center justify-between gap-3 sm:gap-4 cursor-pointer focus:outline-none group">
+          <div class="flex items-baseline gap-2.5 sm:gap-4 min-w-0">
+            <span class="font-serif italic text-lg sm:text-2xl text-gold/80 shrink-0">0${catIndex + 1}.</span>
+            <h2 class="font-serif text-xl sm:text-3xl md:text-4xl text-bone group-hover:text-gold transition-colors break-words">
               ${cat.title}
             </h2>
           </div>
 
-          <div class="flex items-center gap-3 shrink-0">
-            <span class="hidden sm:inline text-[11px] uppercase tracking-[0.2em] text-lavender group-hover:text-gold transition-colors">
+          <div class="flex items-center gap-2 sm:gap-3 shrink-0">
+            <span class="hidden md:inline text-[11px] uppercase tracking-[0.2em] text-lavender group-hover:text-gold transition-colors">
               ${isOpen ? t.shows.closeCategoryLabel : t.shows.openCategoryLabel}
             </span>
-            <span class="w-9 h-9 rounded-full border border-gold/40 flex items-center justify-center text-gold font-serif text-xl transition-transform duration-300 ${isOpen ? 'rotate-45 bg-gold text-obsidian' : ''}">
+            <span class="w-8 h-8 sm:w-9 sm:h-9 rounded-full border border-gold/40 flex items-center justify-center text-gold font-serif text-lg sm:text-xl transition-transform duration-300 ${isOpen ? 'rotate-45 bg-gold text-obsidian' : ''}">
               +
             </span>
           </div>
         </button>
 
-        <div class="${isOpen ? 'block' : 'hidden'} px-5 sm:px-7 md:px-8 pb-7 sm:pb-8 pt-1 border-t border-gold/15">
-          <p class="text-lavender font-light text-sm sm:text-base max-w-4xl leading-relaxed mt-4 mb-8">
+        <div class="${isOpen ? 'block' : 'hidden'} px-4 sm:px-6 md:px-8 pb-6 sm:pb-8 pt-1 border-t border-gold/15">
+          <p class="text-lavender font-light text-sm sm:text-base max-w-4xl leading-relaxed mt-4 mb-6 sm:mb-8">
             ${cat.intro}
           </p>
 
-          <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
             ${cat.items.map((item, itemIdx) => {
               const cardKey = `${cat.id}-${itemIdx}`;
               const isExpanded = expandedShowCards.has(cardKey);
-              const fallbackUrl = getFallbackImage(item.img);
+              const showImgObj = SITE_IMAGES.shows[cardKey] || { src: "img/fotoPrincipal.png" };
 
               return `
                 <article data-show-card="${cardKey}"
                          onclick="toggleShowCard('${cardKey}', event)"
-                         class="show-card-interactive ${isExpanded ? 'is-expanded border-gold/70' : 'border-gold/20'} bg-obsidian/90 hover:border-gold/60 transition-all duration-300 rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer group shadow-lg">
+                         class="show-card-interactive ${isExpanded ? 'is-expanded border-gold/70' : 'border-gold/20'} bg-obsidian/90 hover:border-gold/60 transition-all duration-300 rounded-sm overflow-hidden flex flex-col justify-between cursor-pointer group shadow-lg min-w-0">
                   
                   <div class="relative aspect-[16/10] w-full overflow-hidden bg-theater/25 border-b border-gold/15">
-                    <img src="${item.img}"
+                    <img src="${showImgObj.src}"
                          alt="${item.title}"
-                         onerror="this.src='${fallbackUrl}'"
                          class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
                     <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-obsidian/20 to-transparent pointer-events-none"></div>
                     <span class="absolute top-3 left-3 bg-obsidian/85 backdrop-blur-sm border border-gold/40 text-gold text-[10px] uppercase tracking-[0.2em] px-2.5 py-1 rounded-sm">
@@ -203,18 +283,18 @@ function renderShowsSection() {
                     </span>
                   </div>
 
-                  <div class="p-5 sm:p-6 flex-1 flex flex-col justify-between">
+                  <div class="p-4 sm:p-6 flex-1 flex flex-col justify-between min-w-0">
                     <div>
                       <div class="flex items-start justify-between gap-3">
-                        <h3 class="font-serif text-2xl text-bone group-hover:text-gold transition-colors">
+                        <h3 class="font-serif text-xl sm:text-2xl text-bone group-hover:text-gold transition-colors">
                           ${item.title}
                         </h3>
-                        <span class="text-[11px] uppercase tracking-wider text-gold/80 shrink-0 pt-1">
+                        <span class="text-sm uppercase tracking-wider text-gold/80 shrink-0 pt-0.5">
                           ${isExpanded ? '−' : '+'}
                         </span>
                       </div>
 
-                      <p class="text-[11px] uppercase tracking-[0.16em] text-lavender/80 mt-2">
+                      <p class="text-[11px] uppercase tracking-[0.14em] sm:tracking-[0.16em] text-lavender/80 mt-2">
                         ${t.shows.expandHint}
                       </p>
 
@@ -230,11 +310,11 @@ function renderShowsSection() {
                       </div>
                     </div>
 
-                    <div class="pt-5 mt-4 border-t border-gold/10">
+                    <div class="pt-4 sm:pt-5 mt-4 border-t border-gold/10">
                       <button type="button"
                               data-whatsapp-btn="true"
                               onclick="cotizarWhatsApp('${item.whatsappKey}')"
-                              class="w-full border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all py-3 text-xs uppercase tracking-[0.2em] font-medium cursor-pointer rounded-sm">
+                              class="w-full border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all py-3 text-xs uppercase tracking-[0.18em] font-medium cursor-pointer rounded-sm">
                         ${t.shows.btnRequest} →
                       </button>
                     </div>
@@ -276,11 +356,13 @@ function updateContent() {
     let marqueeHTML = "";
     const items = [...t.marquee, ...t.marquee];
     items.forEach(text => {
-      marqueeHTML += `<span>${text}</span><span class="text-lavender/40">✦</span>`;
+      marqueeHTML += `<span class="whitespace-nowrap">${text}</span><span class="text-lavender/40 shrink-0">✦</span>`;
     });
     marqueeContainer.innerHTML = marqueeHTML;
   }
 
+  renderHeroImage();
+  renderGallerySection();
   renderVideoCarousel();
   renderShowsSection();
 
@@ -295,9 +377,9 @@ function updateContent() {
     ];
     t.services.items.forEach((srv, i) => {
       servHTML += `
-        <div class="border border-gold/20 bg-obsidian/80 p-6 sm:p-7 rounded-sm hover:border-gold transition-colors">
-          <svg class="w-8 h-8 text-gold mb-5" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">${icons[i]}</svg>
-          <h3 class="font-serif text-2xl text-bone mb-2">${srv.title}</h3>
+        <div class="border border-gold/20 bg-obsidian/80 p-5 sm:p-7 rounded-sm hover:border-gold transition-colors min-w-0">
+          <svg class="w-7 h-7 sm:w-8 sm:h-8 text-gold mb-4 sm:mb-5" fill="none" stroke="currentColor" stroke-width="1.4" viewBox="0 0 24 24">${icons[i]}</svg>
+          <h3 class="font-serif text-xl sm:text-2xl text-bone mb-2">${srv.title}</h3>
           <p class="text-sm text-lavender font-light leading-relaxed">${srv.desc}</p>
         </div>
       `;
@@ -310,10 +392,10 @@ function updateContent() {
     let pillarsHTML = "";
     t.about.pillars.forEach((pil, idx) => {
       pillarsHTML += `
-        <li class="flex gap-4">
-          <span class="text-gold font-serif italic text-xl">0${idx + 1}.</span>
-          <div>
-            <h4 class="font-medium text-bone text-sm uppercase tracking-wider">${pil.title}</h4>
+        <li class="flex gap-3 sm:gap-4 min-w-0">
+          <span class="text-gold font-serif italic text-lg sm:text-xl shrink-0">0${idx + 1}.</span>
+          <div class="min-w-0">
+            <h4 class="font-medium text-bone text-xs sm:text-sm uppercase tracking-wider">${pil.title}</h4>
             <p class="text-sm text-lavender font-light mt-1">${pil.desc}</p>
           </div>
         </li>
@@ -331,7 +413,7 @@ function updateContent() {
 }
 
 // =========================================================================
-// WHATSAPP
+// WHATSAPP & LIGHTBOX
 // =========================================================================
 function cotizarWhatsApp(nombreShow) {
   const mensaje = currentLang === "es"
@@ -354,3 +436,23 @@ function enviarFormularioWhatsApp(event) {
 
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
 }
+
+function openLightbox(src, indexCaption) {
+  const t = translations[currentLang];
+  const modal = document.getElementById("lightbox-modal");
+  const imgEl = document.getElementById("lightbox-img");
+  if (!modal || !imgEl) return;
+  imgEl.src = src;
+  document.getElementById("lightbox-caption").textContent = t.gallery.captions[indexCaption] || "";
+  modal.classList.remove("hidden");
+  modal.classList.add("flex");
+}
+
+function closeLightbox() {
+  const modal = document.getElementById("lightbox-modal");
+  if (!modal) return;
+  modal.classList.add("hidden");
+  modal.classList.remove("flex");
+}
+
+document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });

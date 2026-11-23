@@ -3,6 +3,7 @@ const translations = {
     nav: {
       home: "Inicio",
       showsPage: "Shows",
+      gallery: "Galería",
       contact: "Contacto",
       exploreShows: "Ver Shows",
       quote: "Cotizar"
@@ -27,22 +28,18 @@ const translations = {
     carousel: {
       badge: "En Escena",
       title: "Videos Destacados",
-      subtitle: "Cambia entre ambos videos de YouTube y haz clic para reproducir.",
+      subtitle: "Cambia entre ambos videos de YouTube y haz clic en la portada para reproducir.",
       prev: "← Anterior",
       next: "Siguiente →",
       playHint: "Haz clic para reproducir en YouTube",
       videos: [
         {
-          id: "dQw4w9WgXcQ",
-          title: "Reel Escénico · Magia e Ilusionismo",
-          poster: "img/show-magia.jpg",
-          fallbackPoster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80"
+          id: "k5e3PT-AQgE",
+          title: "Reel Escénico · Magia e Ilusionismo"
         },
         {
-          id: "dQw4w9WgXcQ",
-          title: "Arte de las Burbujas Gigantes en Escena",
-          poster: "img/laboratorio-burbujas.jpg",
-          fallbackPoster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80"
+          id: "k5e3PT-AQgE",
+          title: "Arte de las Burbujas Gigantes en Escena"
         }
       ]
     },
@@ -63,7 +60,6 @@ const translations = {
             {
               label: "Show 1",
               title: "El viaje mágico",
-              img: "img/show-magia.jpg",
               desc: "Un espectáculo de magia, humor y participación que invita a niños y niñas a recorrer una historia llena de sorpresas. Una experiencia donde la imaginación y el asombro conducen a una reflexión final.",
               meta: "Duración: 45 minutos. · Público: Niños y niñas.",
               whatsappKey: "Magia - Show 1: El viaje mágico"
@@ -71,7 +67,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Secretos a contraluz",
-              img: "img/magia-intima.jpg",
               desc: "Una experiencia de magia para adultos que combina mentalismo, fakirismo y magia escénica. Misterio, humor y situaciones sorprendentes que desafían los límites de lo posible.",
               meta: "Duración: 55 minutos. · Público: Adultos.",
               whatsappKey: "Magia - Show 2: Secretos a contraluz"
@@ -79,7 +74,6 @@ const translations = {
             {
               label: "Show 3",
               title: "Magia para toda la familia",
-              img: "img/gran-escenario.jpg",
               desc: "Un espectáculo participativo que reúne diferentes formas de magia para sorprender a grandes y pequeños. Ideal para celebraciones y encuentros familiares donde todas las generaciones pueden compartir el asombro.",
               meta: "Duración: 30–60 minutos. · Formato: Escénico y participativo.",
               whatsappKey: "Magia - Show 3: Magia para toda la familia"
@@ -87,7 +81,6 @@ const translations = {
             {
               label: "Show 4",
               title: "Magia de cerca",
-              img: "img/magia-intima.jpg",
               desc: "La magia sucede a pocos centímetros del público. Un formato itinerante e íntimo en el que los espectadores experimentan directamente los efectos mágicos, ideal para restaurantes, recepciones y eventos sociales.",
               meta: "Duración: A convenir. · Formato: Itinerante y de interacción cercana.",
               whatsappKey: "Magia - Show 4: Magia de cerca"
@@ -102,7 +95,6 @@ const translations = {
             {
               label: "Show 1",
               title: "Show de Burbujas",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "Un espectáculo escénico donde las burbujas toman vida y se transforman en sorprendentes figuras, esculturas y efectos visuales acompañados de música y vapor.",
               meta: "Público: Todo público. · Duración: 45 minutos.",
               whatsappKey: "Burbujas - Show 1: Show de Burbujas"
@@ -110,7 +102,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Laboratorio de Burbujas",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "Una experiencia íntima y delicada que explora las posibilidades del arte de las burbujas a través de imágenes y efectos visuales sorprendentes.",
               meta: "Duración: 30 minutos. · Público: Todo público.",
               whatsappKey: "Burbujas - Show 2: Laboratorio de Burbujas"
@@ -118,7 +109,6 @@ const translations = {
             {
               label: "Show 3",
               title: "Burbujas al Viento",
-              img: "img/gran-escenario.jpg",
               desc: "Un espectáculo al aire libre de gran impacto visual. Burbujas gigantes que flotan a grandes distancias y transforman los espacios abiertos en un escenario de asombro.",
               meta: "Público: Todo público. · Formato: Exterior.",
               whatsappKey: "Burbujas - Show 3: Burbujas al Viento"
@@ -126,7 +116,6 @@ const translations = {
             {
               label: "Show 4",
               title: "Animación con Burbujas",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "Una experiencia recreativa y participativa donde niños juegan con burbujas gigantes, experimentan con sus formas y tienen la oportunidad de entrar en una burbuja.",
               meta: "Público: Para niños y niñas. · Formato: Participativo y lúdico.",
               whatsappKey: "Burbujas - Show 4: Animación con Burbujas"
@@ -141,7 +130,6 @@ const translations = {
             {
               label: "Show 1",
               title: "Magia + Show de Burbujas",
-              img: "img/gran-escenario.jpg",
               desc: "Una experiencia que reúne lo mejor de la magia y el arte de las burbujas en una presentación dinámica y participativa, pensada para sorprender a públicos de todas las edades.",
               meta: "Duración: 75 minutos. · Formato: Escénico y participativo.",
               whatsappKey: "Magia + Burbujas - Show 1: Magia + Show de Burbujas"
@@ -149,7 +137,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Magia + Show de Burbujas + Animación",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "Una experiencia ampliada que combina el espectáculo de magia, el show escénico de burbujas y un espacio de interacción donde los asistentes también pueden experimentar con burbujas gigantes.",
               meta: "Duración: 2 horas. · Formato: Espectáculo y actividad participativa.",
               whatsappKey: "Magia + Burbujas - Show 2: Magia + Show de Burbujas + Animación"
@@ -164,7 +151,6 @@ const translations = {
             {
               label: "Show 1",
               title: "La Levedad del Momento Mágico",
-              img: "img/show-magia.jpg",
               desc: "Una obra interdisciplinaria que entrelaza magia, música en vivo, narración oral y coplas. Cuatro artistas construyen una experiencia escénica sensible y poética para compartir en familia.",
               meta: "Duración: 60 minutos. · Formato: Teatral y musical.",
               whatsappKey: "Experiencias Especiales - Show 1: La Levedad del Momento Mágico"
@@ -172,7 +158,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Violín + Burbujas",
-              img: "img/magia-intima.jpg",
               desc: "Una experiencia sensorial donde la música del violín y el arte de las burbujas se encuentran en una propuesta visual y musical. El repertorio se adapta al ambiente y la intención de cada evento.",
               meta: "Formato: Dúo artístico. · Duración: A convenir.",
               whatsappKey: "Experiencias Especiales - Show 2: Violín + Burbujas"
@@ -180,7 +165,6 @@ const translations = {
             {
               label: "Show 3",
               title: "El Circo de las Burbujas",
-              img: "img/gran-escenario.jpg",
               desc: "Un espectáculo colectivo que reúne diferentes disciplinas circenses en una propuesta llena de movimiento, humor y asombro, con clown, malabarismo, acrobacia, magia y burbujas.",
               meta: "Formato: Circense y multidisciplinario. · Espacios: Teatros, auditorios y eventos masivos.",
               whatsappKey: "Experiencias Especiales - Show 3: El Circo de las Burbujas"
@@ -227,6 +211,18 @@ const translations = {
         { title: "Producción Autónoma y Puntual", desc: "Equipamiento técnico propio, adaptación a espacios interiores o exteriores y cumplimiento impecable." }
       ]
     },
+    gallery: {
+      badge: "Archivo Visual",
+      title: "Galería Audiovisual",
+      subtitle: "Haz clic en cualquier fotografía para ampliarla.",
+      zoomLabel: "Ampliar ↗",
+      captions: [
+        "Laboratorio de Burbujas Gigantes",
+        "Ilusionismo en Escena",
+        "Magia Íntima y de Cercanía",
+        "Gran Escenario y Festivales"
+      ]
+    },
     contact: {
       badge: "Reserva tu Fecha",
       title: "Lleva lo Imposible a tu Evento",
@@ -258,12 +254,14 @@ const translations = {
         "El Circo de las Burbujas"
       ]
     },
-    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados"
+    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados",
+    lightboxClose: "Cerrar [✕]"
   },
   en: {
     nav: {
       home: "Home",
       showsPage: "Shows",
+      gallery: "Gallery",
       contact: "Contact",
       exploreShows: "See Shows",
       quote: "Get Quote"
@@ -288,22 +286,18 @@ const translations = {
     carousel: {
       badge: "On Stage",
       title: "Featured Videos",
-      subtitle: "Switch between both YouTube videos and click to play.",
+      subtitle: "Switch between both YouTube videos and click the cover to play.",
       prev: "← Previous",
       next: "Next →",
       playHint: "Click to play on YouTube",
       videos: [
         {
-          id: "dQw4w9WgXcQ",
-          title: "Stage Reel · Magic & Illusionism",
-          poster: "img/show-magia.jpg",
-          fallbackPoster: "https://images.unsplash.com/photo-1534447677768-be436bb09401?auto=format&fit=crop&w=1000&q=80"
+          id: "k5e3PT-AQgE",
+          title: "Stage Reel · Magic & Illusionism"
         },
         {
-          id: "dQw4w9WgXcQ",
-          title: "Giant Bubble Art on Stage",
-          poster: "img/laboratorio-burbujas.jpg",
-          fallbackPoster: "https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&w=1000&q=80"
+          id: "k5e3PT-AQgE",
+          title: "Giant Bubble Art on Stage"
         }
       ]
     },
@@ -324,7 +318,6 @@ const translations = {
             {
               label: "Show 1",
               title: "The Magical Journey",
-              img: "img/show-magia.jpg",
               desc: "A magic, humor, and participation show inviting boys and girls on a story full of surprises. An experience where imagination and wonder lead to a final reflection.",
               meta: "Duration: 45 minutes. · Audience: Boys and girls.",
               whatsappKey: "Magic - Show 1: The Magical Journey"
@@ -332,7 +325,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Backlit Secrets",
-              img: "img/magia-intima.jpg",
               desc: "A magic experience for adults combining mentalism, fakirism, and stage magic. Mystery, humor, and surprising situations challenging the limits of the possible.",
               meta: "Duration: 55 minutes. · Audience: Adults.",
               whatsappKey: "Magic - Show 2: Backlit Secrets"
@@ -340,7 +332,6 @@ const translations = {
             {
               label: "Show 3",
               title: "Magic for the Whole Family",
-              img: "img/gran-escenario.jpg",
               desc: "A participatory show bringing together different forms of magic to surprise young and old alike. Ideal for family celebrations and gatherings where all generations share the wonder.",
               meta: "Duration: 30–60 minutes. · Format: Stage and participatory.",
               whatsappKey: "Magic - Show 3: Magic for the Whole Family"
@@ -348,7 +339,6 @@ const translations = {
             {
               label: "Show 4",
               title: "Close-up Magic",
-              img: "img/magia-intima.jpg",
               desc: "Magic happens just centimeters from the audience. An itinerant and intimate format where spectators directly experience magical effects, ideal for restaurants, receptions, and social events.",
               meta: "Duration: To be agreed. · Format: Itinerant and close interaction.",
               whatsappKey: "Magic - Show 4: Close-up Magic"
@@ -363,7 +353,6 @@ const translations = {
             {
               label: "Show 1",
               title: "Bubble Show",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "A stage show where bubbles come to life and transform into surprising figures, sculptures, and visual effects accompanied by music and vapor.",
               meta: "Audience: All audiences. · Duration: 45 minutes.",
               whatsappKey: "Bubbles - Show 1: Bubble Show"
@@ -371,7 +360,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Bubble Lab",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "An intimate and delicate experience exploring the possibilities of bubble art through surprising images and visual effects.",
               meta: "Duration: 30 minutes. · Audience: All audiences.",
               whatsappKey: "Bubbles - Show 2: Bubble Lab"
@@ -379,7 +367,6 @@ const translations = {
             {
               label: "Show 3",
               title: "Bubbles on the Wind",
-              img: "img/gran-escenario.jpg",
               desc: "An outdoor show of high visual impact. Giant bubbles floating across wide distances and transforming open spaces into a stage of wonder.",
               meta: "Audience: All audiences. · Format: Outdoor.",
               whatsappKey: "Bubbles - Show 3: Bubbles on the Wind"
@@ -387,7 +374,6 @@ const translations = {
             {
               label: "Show 4",
               title: "Bubble Animation",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "A recreational and participatory experience where children play with giant bubbles, experiment with their shapes, and get the chance to step inside a bubble.",
               meta: "Audience: Boys and girls. · Format: Participatory and playful.",
               whatsappKey: "Bubbles - Show 4: Bubble Animation"
@@ -402,7 +388,6 @@ const translations = {
             {
               label: "Show 1",
               title: "Magic + Bubble Show",
-              img: "img/gran-escenario.jpg",
               desc: "An experience bringing together the best of magic and bubble art in a dynamic and participatory presentation, designed to surprise audiences of all ages.",
               meta: "Duration: 75 minutes. · Format: Stage and participatory.",
               whatsappKey: "Magic + Bubbles - Show 1: Magic + Bubble Show"
@@ -410,7 +395,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Magic + Bubble Show + Animation",
-              img: "img/laboratorio-burbujas.jpg",
               desc: "An expanded experience combining the magic show, the stage bubble show, and an interactive space where guests can also experiment with giant bubbles.",
               meta: "Duration: 2 hours. · Format: Show and participatory activity.",
               whatsappKey: "Magic + Bubbles - Show 2: Magic + Bubble Show + Animation"
@@ -425,7 +409,6 @@ const translations = {
             {
               label: "Show 1",
               title: "The Levity of the Magical Moment",
-              img: "img/show-magia.jpg",
               desc: "An interdisciplinary work intertwining magic, live music, oral storytelling, and coplas. Four artists build a sensitive and poetic stage experience to share as a family.",
               meta: "Duration: 60 minutes. · Format: Theatrical and musical.",
               whatsappKey: "Special Experiences - Show 1: The Levity of the Magical Moment"
@@ -433,7 +416,6 @@ const translations = {
             {
               label: "Show 2",
               title: "Violin + Bubbles",
-              img: "img/magia-intima.jpg",
               desc: "A sensory experience where violin music and bubble art meet in a visual and musical proposal. The repertoire adapts to the atmosphere and intention of each event.",
               meta: "Format: Artistic duo. · Duration: To be agreed.",
               whatsappKey: "Special Experiences - Show 2: Violin + Bubbles"
@@ -441,7 +423,6 @@ const translations = {
             {
               label: "Show 3",
               title: "The Bubble Circus",
-              img: "img/gran-escenario.jpg",
               desc: "A collective show bringing together different circus disciplines in a proposal full of movement, humor, and wonder, featuring clowning, juggling, acrobatics, magic, and bubbles.",
               meta: "Format: Circus and multidisciplinary. · Spaces: Theaters, auditoriums, and large-scale events.",
               whatsappKey: "Special Experiences - Show 3: The Bubble Circus"
@@ -488,6 +469,18 @@ const translations = {
         { title: "Autonomous & Timely Production", desc: "Own technical equipment, adaptability to indoor/outdoor spaces, and flawless execution." }
       ]
     },
+    gallery: {
+      badge: "Visual Archive",
+      title: "Audiovisual Gallery",
+      subtitle: "Click on any photograph to enlarge it.",
+      zoomLabel: "Enlarge ↗",
+      captions: [
+        "Giant Bubble Laboratory",
+        "Illusionism on Stage",
+        "Intimate Close-up Magic",
+        "Grand Stage & Festivals"
+      ]
+    },
     contact: {
       badge: "Book Your Date",
       title: "Bring the Impossible to Your Event",
@@ -519,6 +512,7 @@ const translations = {
         "The Bubble Circus"
       ]
     },
-    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved"
+    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved",
+    lightboxClose: "Close [✕]"
   }
 };
