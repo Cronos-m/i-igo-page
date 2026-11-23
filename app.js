@@ -1,7 +1,7 @@
 // =========================================================================
 // CONFIGURACIÓN PRINCIPAL - IÑIGO ILUSIONISTA Y BURBUJÓLOGO
 // =========================================================================
-const WHATSAPP_NUMBER = "573000000000"; // Reemplaza con tu número oficial
+const WHATSAPP_NUMBER = "+573229261864"; // Reemplaza con tu número oficial
 const MOSTRAR_TESTIMONIOS = false;
 let currentLang = "es";
 
