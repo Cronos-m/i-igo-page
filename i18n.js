@@ -3,7 +3,7 @@ const translations = {
     nav: {
       home: "Inicio",
       showsPage: "Shows",
-      gallery: "Galería",
+      services: "Eventos",
       contact: "Contacto",
       exploreShows: "Ver Shows",
       quote: "Cotizar"
@@ -17,29 +17,70 @@ const translations = {
       btnShowsPage: "Ir a Shows →",
       btnWhatsApp: "Cotizar por WhatsApp"
     },
-    marquee: [
-      "Ilusionismo Contemporáneo",
-      "Burbujas Gigantes",
-      "Arte Escénico",
-      "Eventos Corporativos",
-      "Experiencias Sensoriales",
-      "Teatros y Festivales"
-    ],
+    about: {
+      badge: "Trayectoria Artística",
+      title: "Sobre Iñigo",
+      p1: "Con más de una década dedicada al estudio y la puesta en escena del ilusionismo y el arte de las burbujas, he construido distintas experiencias completamente originales y especiales para distintas ocasiones.",
+      p2: "Un espectáculo lleno de humor, magia con efectos visuales y participación de público.",
+      quote: "“No busco engañar a los ojos, sino invitar al corazón a recordar cómo se siente creer en lo extraordinario.”",
+      ctaShows: "Explorar Catálogo de Shows →",
+      pillarsTitle: "¿Qué hace diferente mi trabajo?",
+      pillars: [
+        {
+          title: "Varios lenguajes artísticos",
+          desc: "Integro la magia, la actuación y el arte de las burbujas como disciplinas propias, con posibilidades de presentarse individualmente o combinarse."
+        },
+        {
+          title: "Formación escénica",
+          desc: "No me limito a ejecutar trucos. Trabajo con recursos del teatro, el humor, la improvisación y la interpretación para construir experiencias."
+        },
+        {
+          title: "Versatilidad",
+          desc: "Desarrollo formatos para niños, adultos y públicos familiares, desde intervenciones íntimas hasta espectáculos escénicos."
+        },
+        {
+          title: "Propuestas propias",
+          desc: "Desarrollo espectáculos con identidad, estructura y narrativa, que van más allá de una sucesión de efectos mágicos."
+        }
+      ]
+    },
     carousel: {
       badge: "En Escena",
       title: "Videos Destacados",
-      subtitle: "Cambia entre ambos videos de YouTube y haz clic en la portada para reproducir.",
+      accompaniment: "Magia que sorprende y conecta.",
       prev: "← Anterior",
       next: "Siguiente →",
       playHint: "Haz clic para reproducir en YouTube",
       videos: [
         {
-          id: "k5e3PT-AQgE",
+          id: "dQw4w9WgXcQ",
           title: "Reel Escénico · Magia e Ilusionismo"
         },
         {
-          id: "k5e3PT-AQgE",
+          id: "dQw4w9WgXcQ",
           title: "Arte de las Burbujas Gigantes en Escena"
+        }
+      ]
+    },
+    services: {
+      badge: "Adaptabilidad Escénica",
+      title: "Eventos que podemos potenciar",
+      items: [
+        {
+          title: "Cumpleaños",
+          desc: "Celebraciones familiares inolvidables donde el homenajeado y sus invitados son protagonistas del asombro."
+        },
+        {
+          title: "Eventos corporativos",
+          desc: "Lanzamientos de marca, galas y convenciones con mensajes integrados de forma sofisticada y memorable."
+        },
+        {
+          title: "Colegios e instituciones",
+          desc: "Funciones pedagógicas y culturales que despiertan la curiosidad, la ciencia detrás de las burbujas y la imaginación."
+        },
+        {
+          title: "Teatros y festivales",
+          desc: "Puestas en escena de gran formato con iluminación teatral, dramaturgia visual y conexión con públicos masivos."
         }
       ]
     },
@@ -173,56 +214,6 @@ const translations = {
         }
       ]
     },
-    services: {
-      badge: "Adaptabilidad Escénica",
-      title: "Eventos a los que Llegamos",
-      items: [
-        {
-          title: "Cumpleaños",
-          desc: "Celebraciones familiares inolvidables donde el homenajeado y sus invitados son protagonistas del asombro."
-        },
-        {
-          title: "Eventos corporativos",
-          desc: "Lanzamientos de marca, galas y convenciones con mensajes integrados de forma sofisticada y memorable."
-        },
-        {
-          title: "Colegios e instituciones",
-          desc: "Funciones pedagógicas y culturales que despiertan la curiosidad, la ciencia detrás de las burbujas y la imaginación."
-        },
-        {
-          title: "Teatros y festivales",
-          desc: "Puestas en escena de gran formato con iluminación teatral, dramaturgia visual y conexión con públicos masivos."
-        }
-      ]
-    },
-    about: {
-      badge: "Trayectoria Artística",
-      title: "Sobre Iñigo",
-      p1: "Con más de una década dedicada al estudio y la puesta en escena del ilusionismo y el arte efímero de las burbujas, Iñigo ha construido un lenguaje propio donde la técnica clásica se encuentra con la poesía visual contemporánea.",
-      p2: "Su trabajo trasciende el truco convencional para convertirse en una experiencia sensorial completa: cada movimiento, cada pausa y cada esfera iridiscente están pensados para devolverle al público la capacidad genuina de maravillarse.",
-      quote: "“No busco engañar a los ojos, sino invitar al corazón a recordar cómo se siente creer en lo extraordinario.”",
-      ctaShows: "Explorar Catálogo de Shows →",
-      pillarsTitle: "¿Qué hace diferente mi trabajo?",
-      pillars: [
-        { title: "Estética Teatral Cuidada", desc: "Vestuario, utilería e iluminación diseñados con rigor artístico para elevar la atmósfera de cualquier evento." },
-        { title: "Humor Blanco y Respetuoso", desc: "Participación del público siempre desde la elegancia, la empatía y el protagonismo positivo." },
-        { title: "Fórmulas Propias de Burbujología", desc: "Estructuras gigantes, burbujas con vapor y esculturas aéreas de alta resistencia y brillo iridiscente." },
-        { title: "Versatilidad Intergeneracional", desc: "Espectáculos diseñados para cautivar tanto la inocencia de los niños como la exigencia del público adulto." },
-        { title: "Producción Autónoma y Puntual", desc: "Equipamiento técnico propio, adaptación a espacios interiores o exteriores y cumplimiento impecable." }
-      ]
-    },
-    gallery: {
-      badge: "Archivo Visual",
-      title: "Galería Audiovisual",
-      subtitle: "Haz clic en cualquier fotografía para ampliarla.",
-      zoomLabel: "Ampliar ↗",
-      captions: [
-        "Laboratorio de Burbujas Gigantes",
-        "Ilusionismo en Escena",
-        "Magia Íntima y de Cercanía",
-        "Gran Escenario y Festivales"
-      ]
-    },
     contact: {
       badge: "Reserva tu Fecha",
       title: "Lleva lo Imposible a tu Evento",
@@ -254,14 +245,13 @@ const translations = {
         "El Circo de las Burbujas"
       ]
     },
-    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados",
-    lightboxClose: "Cerrar [✕]"
+    footer: "© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados"
   },
   en: {
     nav: {
       home: "Home",
       showsPage: "Shows",
-      gallery: "Gallery",
+      services: "Events",
       contact: "Contact",
       exploreShows: "See Shows",
       quote: "Get Quote"
@@ -275,29 +265,70 @@ const translations = {
       btnShowsPage: "Go to Shows →",
       btnWhatsApp: "Get Quote via WhatsApp"
     },
-    marquee: [
-      "Contemporary Illusionism",
-      "Giant Bubbles",
-      "Performing Arts",
-      "Corporate Events",
-      "Sensory Experiences",
-      "Theaters & Festivals"
-    ],
+    about: {
+      badge: "Artistic Career",
+      title: "About Iñigo",
+      p1: "With over a decade dedicated to the study and staging of illusionism and bubble art, I have built completely original and special experiences for different occasions.",
+      p2: "A show full of humor, magic with visual effects, and audience participation.",
+      quote: "“I don't seek to fool the eyes, but to invite the heart to remember what it feels like to believe in the extraordinary.”",
+      ctaShows: "Explore Shows Catalog →",
+      pillarsTitle: "What makes my work different?",
+      pillars: [
+        {
+          title: "Multiple artistic languages",
+          desc: "I integrate magic, acting, and bubble art as distinct disciplines, with possibilities to perform individually or combined."
+        },
+        {
+          title: "Stage training",
+          desc: "I don't limit myself to executing tricks. I work with theater, humor, improvisation, and performance resources to build experiences."
+        },
+        {
+          title: "Versatility",
+          desc: "I develop formats for children, adults, and family audiences, from intimate interventions to stage shows."
+        },
+        {
+          title: "Original proposals",
+          desc: "I develop shows with identity, structure, and narrative that go beyond a sequence of magical effects."
+        }
+      ]
+    },
     carousel: {
       badge: "On Stage",
       title: "Featured Videos",
-      subtitle: "Switch between both YouTube videos and click the cover to play.",
+      accompaniment: "Magic that surprises and connects.",
       prev: "← Previous",
       next: "Next →",
       playHint: "Click to play on YouTube",
       videos: [
         {
-          id: "k5e3PT-AQgE",
+          id: "dQw4w9WgXcQ",
           title: "Stage Reel · Magic & Illusionism"
         },
         {
-          id: "k5e3PT-AQgE",
+          id: "dQw4w9WgXcQ",
           title: "Giant Bubble Art on Stage"
+        }
+      ]
+    },
+    services: {
+      badge: "Stage Versatility",
+      title: "Events We Can Elevate",
+      items: [
+        {
+          title: "Birthdays",
+          desc: "Unforgettable family celebrations where the guest of honor and their guests take center stage in wonder."
+        },
+        {
+          title: "Corporate Events",
+          desc: "Brand launches, galas, and conventions featuring messages integrated seamlessly in a sophisticated and memorable way."
+        },
+        {
+          title: "Schools & Institutions",
+          desc: "Educational and cultural performances that spark curiosity, reveal the science behind bubbles, and awaken imagination."
+        },
+        {
+          title: "Theaters & Festivals",
+          desc: "Large-scale stage productions featuring theatrical lighting, visual dramaturgy, and connection with mass audiences."
         }
       ]
     },
@@ -431,56 +462,6 @@ const translations = {
         }
       ]
     },
-    services: {
-      badge: "Stage Versatility",
-      title: "Events We Cater To",
-      items: [
-        {
-          title: "Birthdays",
-          desc: "Unforgettable family celebrations where the guest of honor and their guests take center stage in wonder."
-        },
-        {
-          title: "Corporate Events",
-          desc: "Brand launches, galas, and conventions featuring messages integrated seamlessly in a sophisticated and memorable way."
-        },
-        {
-          title: "Schools & Institutions",
-          desc: "Educational and cultural performances that spark curiosity, reveal the science behind bubbles, and awaken imagination."
-        },
-        {
-          title: "Theaters & Festivals",
-          desc: "Large-scale stage productions featuring theatrical lighting, visual dramaturgy, and connection with mass audiences."
-        }
-      ]
-    },
-    about: {
-      badge: "Artistic Career",
-      title: "About Iñigo",
-      p1: "With over a decade dedicated to the study and staging of illusionism and the ephemeral art of bubbles, Iñigo has built a unique language where classical technique meets contemporary visual poetry.",
-      p2: "His work transcends the conventional trick to become a complete sensory experience: every movement, every pause, and every iridescent sphere is designed to restore the audience's genuine capacity to marvel.",
-      quote: "“I don't seek to fool the eyes, but to invite the heart to remember what it feels like to believe in the extraordinary.”",
-      ctaShows: "Explore Shows Catalog →",
-      pillarsTitle: "What makes my work different?",
-      pillars: [
-        { title: "Refined Theatrical Aesthetics", desc: "Costumes, props, and lighting designed with artistic rigor to elevate the atmosphere of any event." },
-        { title: "Gentle & Respectful Humor", desc: "Audience participation always approached with elegance, empathy, and positive spotlighting." },
-        { title: "Custom Bubble Formulas", desc: "Giant structures, vapor-filled bubbles, and high-strength aerial sculptures with iridescent shine." },
-        { title: "Intergenerational Versatility", desc: "Performances designed to captivate both the innocence of children and the refinement of adults." },
-        { title: "Autonomous & Timely Production", desc: "Own technical equipment, adaptability to indoor/outdoor spaces, and flawless execution." }
-      ]
-    },
-    gallery: {
-      badge: "Visual Archive",
-      title: "Audiovisual Gallery",
-      subtitle: "Click on any photograph to enlarge it.",
-      zoomLabel: "Enlarge ↗",
-      captions: [
-        "Giant Bubble Laboratory",
-        "Illusionism on Stage",
-        "Intimate Close-up Magic",
-        "Grand Stage & Festivals"
-      ]
-    },
     contact: {
       badge: "Book Your Date",
       title: "Bring the Impossible to Your Event",
@@ -512,7 +493,6 @@ const translations = {
         "The Bubble Circus"
       ]
     },
-    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved",
-    lightboxClose: "Close [✕]"
+    footer: "© 2026 Iñigo · Magician & Bubble Artist · All rights reserved"
   }
 };

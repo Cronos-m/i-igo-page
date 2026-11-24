@@ -2,7 +2,6 @@
 // CONFIGURACIÓN PRINCIPAL - IÑIGO ILUSIONISTA Y BURBUJÓLOGO
 // =========================================================================
 const WHATSAPP_NUMBER = "573000000000"; // Reemplaza con tu número real
-const MOSTRAR_TESTIMONIOS = false;
 let currentLang = "es";
 
 // =========================================================================
@@ -19,24 +18,6 @@ const SITE_IMAGES = {
     },
     {
       poster: "img/portadaBurbujas.png"
-    }
-  ],
-  gallery: [
-    {
-      src: "img/galeriaUno.png",
-      alt: "Laboratorio de Burbujas"
-    },
-    {
-      src: "img/galeriaDos.png",
-      alt: "Show de Magia"
-    },
-    {
-      src: "img/galeriaTres.png",
-      alt: "Magia Íntima"
-    },
-    {
-      src: "img/galeriaCuatro.png",
-      alt: "Gran Escenario"
     }
   ],
   shows: {
@@ -65,10 +46,6 @@ const openCategories = new Set();
 const expandedShowCards = new Set();
 
 document.addEventListener("DOMContentLoaded", () => {
-  const seccionTestimonios = document.getElementById("seccion-testimonios");
-  if (seccionTestimonios && MOSTRAR_TESTIMONIOS) {
-    seccionTestimonios.classList.remove("hidden");
-  }
   updateContent();
 });
 
@@ -81,46 +58,8 @@ function toggleLanguage() {
   updateContent();
 }
 
-function applyImageSrc(imgElement, src, altText) {
-  if (!imgElement || !src) return;
-  if (altText) imgElement.alt = altText;
-  imgElement.src = src;
-}
-
 // =========================================================================
-// FOTO PRINCIPAL (HERO) Y GALERÍA AUDIOVISUAL (EN INICIO)
-// =========================================================================
-function renderHeroImage() {
-  const heroImg = document.getElementById("hero-img");
-  if (heroImg && SITE_IMAGES.hero) {
-    applyImageSrc(heroImg, SITE_IMAGES.hero.src, SITE_IMAGES.hero.alt);
-  }
-}
-
-function renderGallerySection() {
-  const galleryGrid = document.getElementById("gallery-grid");
-  if (!galleryGrid) return;
-
-  const t = translations[currentLang];
-  galleryGrid.innerHTML = SITE_IMAGES.gallery.map((item, idx) => {
-    const caption = t.gallery.captions[idx] || item.alt;
-    return `
-      <button type="button"
-              onclick="openLightbox('${item.src}', ${idx})"
-              class="group relative aspect-[3/4] w-full overflow-hidden border border-gold/20 rounded-sm cursor-pointer bg-theater/15">
-        <img src="${item.src}"
-             alt="${caption}"
-             class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
-        <div class="absolute inset-0 bg-obsidian/45 opacity-0 group-hover:opacity-100 transition-opacity flex items-end p-4">
-          <span class="text-xs uppercase tracking-widest text-gold">${t.gallery.zoomLabel}</span>
-        </div>
-      </button>
-    `;
-  }).join("");
-}
-
-// =========================================================================
-// CARRUSEL DE 2 VIDEOS DE YOUTUBE (EN INICIO)
+// CARRUSEL DE 2 VIDEOS DE YOUTUBE (SIN REPRODUCCIÓN AUTOMÁTICA)
 // =========================================================================
 function setVideoSlide(index) {
   const videos = translations[currentLang].carousel.videos;
@@ -170,7 +109,7 @@ function renderVideoCarousel() {
               class="relative w-full h-full flex items-center justify-center cursor-pointer group text-center bg-theater/25">
         <img src="${posterSrc}"
              alt="${video.title}"
-             class="absolute inset-0 w-full h-full object-cover object-center opacity-70 group-hover:scale-105 transition-transform duration-700" />
+             class="w-full h-full object-cover object-center opacity-70 group-hover:scale-105 transition-transform duration-700" />
         <div class="absolute inset-0 bg-gradient-to-t from-obsidian/80 via-obsidian/25 to-transparent pointer-events-none"></div>
         <div class="relative z-10 px-4 sm:px-6 max-w-full">
           <div class="w-14 h-14 sm:w-16 sm:h-16 mx-auto rounded-full border-2 border-gold bg-obsidian/85 text-gold flex items-center justify-center group-hover:bg-gold group-hover:text-obsidian transition-all mb-3 sm:mb-4">
@@ -351,18 +290,12 @@ function updateContent() {
     if (val) el.placeholder = val;
   });
 
-  const marqueeContainer = document.getElementById("marquee-container");
-  if (marqueeContainer) {
-    let marqueeHTML = "";
-    const items = [...t.marquee, ...t.marquee];
-    items.forEach(text => {
-      marqueeHTML += `<span class="whitespace-nowrap">${text}</span><span class="text-lavender/40 shrink-0">✦</span>`;
-    });
-    marqueeContainer.innerHTML = marqueeHTML;
+  const heroImg = document.getElementById("hero-img");
+  if (heroImg && SITE_IMAGES.hero) {
+    heroImg.src = SITE_IMAGES.hero.src;
+    heroImg.alt = SITE_IMAGES.hero.alt;
   }
 
-  renderHeroImage();
-  renderGallerySection();
   renderVideoCarousel();
   renderShowsSection();
 
@@ -392,12 +325,12 @@ function updateContent() {
     let pillarsHTML = "";
     t.about.pillars.forEach((pil, idx) => {
       pillarsHTML += `
-        <li class="flex gap-3 sm:gap-4 min-w-0">
-          <span class="text-gold font-serif italic text-lg sm:text-xl shrink-0">0${idx + 1}.</span>
-          <div class="min-w-0">
-            <h4 class="font-medium text-bone text-xs sm:text-sm uppercase tracking-wider">${pil.title}</h4>
-            <p class="text-sm text-lavender font-light mt-1">${pil.desc}</p>
+        <li class="border-l-2 border-gold/70 hover:border-gold bg-obsidian/70 hover:bg-theater/15 transition-colors p-5 sm:p-6 rounded-r-sm min-w-0">
+          <div class="flex items-baseline gap-3">
+            <span class="text-gold font-serif italic text-xl sm:text-2xl shrink-0">0${idx + 1}</span>
+            <h4 class="font-serif text-xl sm:text-2xl text-bone leading-snug">${pil.title}</h4>
           </div>
+          <p class="text-sm text-lavender font-light mt-2.5 leading-relaxed pl-0 sm:pl-8">${pil.desc}</p>
         </li>
       `;
     });
@@ -413,7 +346,7 @@ function updateContent() {
 }
 
 // =========================================================================
-// WHATSAPP & LIGHTBOX
+// WHATSAPP
 // =========================================================================
 function cotizarWhatsApp(nombreShow) {
   const mensaje = currentLang === "es"
@@ -436,23 +369,3 @@ function enviarFormularioWhatsApp(event) {
 
   window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(mensaje)}`, "_blank", "noopener,noreferrer");
 }
-
-function openLightbox(src, indexCaption) {
-  const t = translations[currentLang];
-  const modal = document.getElementById("lightbox-modal");
-  const imgEl = document.getElementById("lightbox-img");
-  if (!modal || !imgEl) return;
-  imgEl.src = src;
-  document.getElementById("lightbox-caption").textContent = t.gallery.captions[indexCaption] || "";
-  modal.classList.remove("hidden");
-  modal.classList.add("flex");
-}
-
-function closeLightbox() {
-  const modal = document.getElementById("lightbox-modal");
-  if (!modal) return;
-  modal.classList.add("hidden");
-  modal.classList.remove("flex");
-}
-
-document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLightbox(); });

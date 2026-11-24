@@ -41,18 +41,6 @@
       overflow-x: clip;
       max-width: 100%;
     }
-    @keyframes marquee {
-      0% { transform: translateX(0%); }
-      100% { transform: translateX(-50%); }
-    }
-    .animate-marquee {
-      display: flex;
-      width: max-content;
-      animation: marquee 28s linear infinite;
-    }
-    .animate-marquee:hover {
-      animation-play-state: paused;
-    }
     .theater-glow {
       background: radial-gradient(circle at 50% 0%, rgba(59, 24, 95, 0.38) 0%, rgba(11, 9, 13, 0) 70%);
     }
@@ -60,7 +48,7 @@
 </head>
 <body class="bg-obsidian text-bone antialiased selection:bg-gold selection:text-obsidian">
 
-  <!-- 1. NAVBAR DE NAVEGACIÓN ENTRE PÁGINAS -->
+  <!-- NAVBAR DE NAVEGACIÓN ENTRE PÁGINAS -->
   <header class="fixed top-0 inset-x-0 z-50 bg-obsidian/90 backdrop-blur-lg border-b border-gold/15">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-2">
       <a href="index.html" class="font-serif text-xl sm:text-3xl tracking-wider text-bone flex items-center gap-1.5 sm:gap-2 shrink-0">
@@ -70,7 +58,7 @@
       <nav class="flex items-center gap-3 sm:gap-7 text-[11px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.2em] min-w-0">
         <a href="index.html" data-i18n="nav.home" class="text-gold border-b border-gold pb-0.5 transition-colors whitespace-nowrap">Inicio</a>
         <a href="shows.html" data-i18n="nav.showsPage" class="text-lavender hover:text-gold transition-colors whitespace-nowrap">Shows</a>
-        <a href="#galeria" data-i18n="nav.gallery" class="hidden md:inline text-lavender hover:text-gold transition-colors whitespace-nowrap">Galería</a>
+        <a href="#eventos-potenciar" data-i18n="nav.services" class="hidden md:inline text-lavender hover:text-gold transition-colors whitespace-nowrap">Eventos</a>
         <a href="#contacto" data-i18n="nav.contact" class="text-lavender hover:text-gold transition-colors whitespace-nowrap">Contacto</a>
       </nav>
 
@@ -87,8 +75,8 @@
     </div>
   </header>
 
-  <!-- 2. PRESENTACIÓN (HERO + MARQUEE) -->
-  <section class="relative pt-24 pb-14 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 theater-glow">
+  <!-- 1. PORTADA: TEXTO Y FOTO -->
+  <section class="relative pt-24 pb-16 sm:pt-32 sm:pb-24 md:pt-40 md:pb-28 theater-glow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
       
       <div class="lg:col-span-7 space-y-5 sm:space-y-7 text-center lg:text-left min-w-0">
@@ -124,22 +112,65 @@
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Cinta Animada (Marquee) -->
-    <div class="mt-12 sm:mt-20 border-y border-gold/20 bg-theater/15 py-3.5 sm:py-4 overflow-hidden w-full">
-      <div id="marquee-container" class="animate-marquee flex items-center gap-8 sm:gap-12 text-[11px] sm:text-xs uppercase tracking-[0.22em] sm:tracking-[0.3em] text-gold/90">
-        <!-- Inyectado desde i18n.js -->
+  <!-- 2. SOBRE IÑIGO + 2.1. QUÉ HACE DIFERENTE MI TRABAJO -->
+  <section id="sobre-inigo" class="py-20 sm:py-28 border-t border-gold/15 max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="space-y-6 sm:space-y-8 min-w-0">
+      <div class="space-y-2">
+        <span data-i18n="about.badge" class="inline-block text-xs uppercase tracking-[0.28em] text-gold">
+          Trayectoria Artística
+        </span>
+        <h2 data-i18n="about.title" class="font-serif text-4xl sm:text-5xl md:text-6xl text-bone leading-[1.08]">
+          Sobre Iñigo
+        </h2>
       </div>
+
+      <div class="space-y-5 sm:space-y-6 text-lavender font-light text-base sm:text-lg md:text-xl leading-relaxed sm:leading-[1.8]">
+        <p data-i18n="about.p1">...</p>
+        <p data-i18n="about.p2">...</p>
+      </div>
+
+      <blockquote data-i18n="about.quote"
+                  class="border-l-2 border-gold pl-5 sm:pl-7 py-2 font-serif italic text-xl sm:text-2xl md:text-3xl text-bone leading-snug">
+        ...
+      </blockquote>
+
+      <div class="pt-2">
+        <a href="shows.html" data-i18n="about.ctaShows"
+           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all px-7 py-3.5 text-xs uppercase tracking-[0.2em] font-medium rounded-sm">
+          Explorar Catálogo de Shows →
+        </a>
+      </div>
+    </div>
+
+    <!-- 2.1. ¿QUÉ HACE DIFERENTE MI TRABAJO? -->
+    <div id="que-hace-diferente" class="mt-16 sm:mt-20 pt-12 sm:pt-14 border-t border-gold/20 min-w-0">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-8 sm:mb-10">
+        <div>
+          <span class="text-[11px] uppercase tracking-[0.25em] text-lavender/80">2.1</span>
+          <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl sm:text-3xl md:text-4xl text-gold mt-1">
+            ¿Qué hace diferente mi trabajo?
+          </h3>
+        </div>
+        <div class="h-px flex-1 bg-gold/15 hidden md:block ml-6 mb-2"></div>
+      </div>
+
+      <ul id="pillars-list" class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+        <!-- Inyectado desde i18n.js -->
+      </ul>
     </div>
   </section>
 
-  <!-- 3. CARRUSEL DE 2 VIDEOS DE YOUTUBE -->
+  <!-- 3. VIDEOS DESTACADOS -->
   <section id="videos-carrusel" class="py-16 sm:py-24 border-t border-gold/15">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 min-w-0">
       <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
         <span data-i18n="carousel.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">En Escena</span>
         <h2 data-i18n="carousel.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-2 sm:mt-3 text-bone">Videos Destacados</h2>
-        <p data-i18n="carousel.subtitle" class="text-lavender font-light mt-2 sm:mt-3 text-sm sm:text-base">Cambia entre ambos videos de YouTube y haz clic en la portada para reproducir.</p>
+        <p data-i18n="carousel.accompaniment" class="text-bone font-serif italic text-2xl sm:text-3xl md:text-4xl leading-snug mt-3">
+          Magia que sorprende y conecta.
+        </p>
       </div>
 
       <div class="w-full min-w-0">
@@ -167,38 +198,12 @@
     </div>
   </section>
 
-  <!-- 4. SOBRE IÑIGO -->
-  <section id="sobre-inigo" class="py-16 sm:py-24 border-t border-gold/15 max-w-7xl mx-auto px-4 sm:px-6">
-    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start">
-      <div class="lg:col-span-6 space-y-5 sm:space-y-6 min-w-0">
-        <span data-i18n="about.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">Trayectoria Artística</span>
-        <h2 data-i18n="about.title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-bone">Sobre Iñigo</h2>
-        <p data-i18n="about.p1" class="text-lavender font-light text-sm sm:text-base leading-relaxed">...</p>
-        <p data-i18n="about.p2" class="text-lavender font-light text-sm sm:text-base leading-relaxed">...</p>
-        <blockquote data-i18n="about.quote" class="border-l-2 border-gold pl-4 sm:pl-6 py-2 font-serif italic text-lg sm:text-2xl text-bone">...</blockquote>
-        <div class="pt-2">
-          <a href="shows.html" data-i18n="about.ctaShows"
-             class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all px-6 py-3.5 text-xs uppercase tracking-[0.18em] font-medium rounded-sm">
-            Explorar Catálogo de Shows →
-          </a>
-        </div>
-      </div>
-
-      <div class="lg:col-span-6 border border-gold/25 bg-theater/15 p-5 sm:p-8 md:p-10 rounded-sm min-w-0">
-        <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl text-gold mb-6">¿Qué hace diferente mi trabajo?</h3>
-        <ul id="pillars-list" class="space-y-5">
-          <!-- Inyectado desde i18n.js -->
-        </ul>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. EVENTOS A LOS QUE LLEGAMOS -->
-  <section id="servicios" class="py-16 sm:py-24 border-y border-gold/15 bg-theater/10">
+  <!-- 4. EVENTOS QUE PODEMOS POTENCIAR -->
+  <section id="eventos-potenciar" class="py-16 sm:py-24 border-y border-gold/15 bg-theater/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
         <span data-i18n="services.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">Adaptabilidad Escénica</span>
-        <h2 data-i18n="services.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-2 sm:mt-3 text-bone">Eventos a los que Llegamos</h2>
+        <h2 data-i18n="services.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-2 sm:mt-3 text-bone">Eventos que podemos potenciar</h2>
       </div>
 
       <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
@@ -207,7 +212,7 @@
     </div>
   </section>
 
-  <!-- 6. GALERÍA AUDIOVISUAL -->
+  <!-- GALERÍA AUDIOVISUAL (COMENTADA PARA USO A FUTURO)
   <section id="galeria" class="py-16 sm:py-24 border-b border-gold/15">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
       <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-14">
@@ -217,10 +222,10 @@
       </div>
 
       <div id="gallery-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-5">
-        <!-- Inyectado desde app.js y SITE_IMAGES.gallery -->
       </div>
     </div>
   </section>
+  -->
 
   <!-- TESTIMONIOS (Oculta por defecto) -->
   <section id="seccion-testimonios" class="hidden py-24 border-b border-gold/15 bg-theater/10">
@@ -232,7 +237,7 @@
     </div>
   </section>
 
-  <!-- 7. CONTACTO Y COTIZACIONES (AL FINAL DE INICIO) -->
+  <!-- CONTACTO Y COTIZACIONES (AL FINAL DE INICIO) -->
   <section id="contacto" class="py-16 sm:py-24 theater-glow">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
       <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
@@ -296,13 +301,13 @@
     <div class="flex flex-wrap justify-center gap-5 sm:gap-6">
       <a href="index.html" data-i18n="nav.home" class="hover:text-gold transition-colors">Inicio</a>
       <a href="shows.html" data-i18n="nav.showsPage" class="hover:text-gold transition-colors">Shows</a>
-      <a href="#galeria" data-i18n="nav.gallery" class="hover:text-gold transition-colors">Galería</a>
+      <a href="#eventos-potenciar" data-i18n="nav.services" class="hover:text-gold transition-colors">Eventos</a>
       <a href="#contacto" data-i18n="nav.contact" class="hover:text-gold transition-colors">Contacto</a>
     </div>
     <p data-i18n="footer">© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados</p>
   </footer>
 
-  <!-- LIGHTBOX -->
+  <!-- LIGHTBOX (COMENTADO JUNTO CON LA GALERÍA A FUTURO)
   <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-obsidian/95 backdrop-blur-md items-center justify-center p-4 sm:p-6">
     <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
       <button type="button" data-i18n="lightboxClose" onclick="closeLightbox()" class="absolute -top-10 right-0 text-gold text-xs sm:text-sm uppercase tracking-widest hover:underline cursor-pointer">
@@ -312,6 +317,7 @@
       <p id="lightbox-caption" class="font-serif italic text-lg sm:text-xl text-bone mt-4"></p>
     </div>
   </div>
+  -->
 
   <script src="i18n.js"></script>
   <script src="app.js"></script>
