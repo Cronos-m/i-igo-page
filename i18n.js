@@ -13,7 +13,7 @@ const translations = {
       titlePart1: "“La magia es un arte que nos permite ",
       titleAccent: "sentir lo imposible",
       titlePart2: "”",
-      subtitle: "Magia, ilusionismo y arte de las burbujas para eventos, escenarios y experiencias especiales.",
+      subtitle: "Magia, ilusionismo y burbulogía para eventos, escenarios y experiencias especiales.",
       btnShowsPage: "Ir a Shows →",
       btnWhatsApp: "Cotizar por WhatsApp"
     },
@@ -53,11 +53,11 @@ const translations = {
       playHint: "Haz clic para reproducir en YouTube",
       videos: [
         {
-          id: "dQw4w9WgXcQ",
+          id: "k5e3PT-AQgE",
           title: "Reel Escénico · Magia e Ilusionismo"
         },
         {
-          id: "dQw4w9WgXcQ",
+          id: "k5e3PT-AQgE",
           title: "Arte de las Burbujas Gigantes en Escena"
         }
       ]
@@ -261,7 +261,7 @@ const translations = {
       titlePart1: "“Magic is an art that allows us ",
       titleAccent: "to feel the impossible",
       titlePart2: "”",
-      subtitle: "Magic, illusionism, and bubble art for events, stages, and special experiences.",
+      subtitle: "Magic, illusionism, and bubbleology for events, stages, and special experiences.",
       btnShowsPage: "Go to Shows →",
       btnWhatsApp: "Get Quote via WhatsApp"
     },
@@ -301,11 +301,11 @@ const translations = {
       playHint: "Click to play on YouTube",
       videos: [
         {
-          id: "dQw4w9WgXcQ",
+          id: "k5e3PT-AQgE",
           title: "Stage Reel · Magic & Illusionism"
         },
         {
-          id: "dQw4w9WgXcQ",
+          id: "k5e3PT-AQgE",
           title: "Giant Bubble Art on Stage"
         }
       ]

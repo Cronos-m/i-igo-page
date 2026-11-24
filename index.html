@@ -4,7 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Iñigo | Ilusionista y Burbujólogo</title>
-  <meta name="description" content="Magia, ilusionismo y arte de las burbujas para eventos, escenarios y experiencias especiales." />
+  <meta name="description" content="Magia, ilusionismo y burbulogía para eventos, escenarios y experiencias especiales." />
 
   <!-- Tipografías Editoriales -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -48,64 +48,80 @@
 </head>
 <body class="bg-obsidian text-bone antialiased selection:bg-gold selection:text-obsidian">
 
-  <!-- NAVBAR DE NAVEGACIÓN ENTRE PÁGINAS -->
-  <header class="fixed top-0 inset-x-0 z-50 bg-obsidian/90 backdrop-blur-lg border-b border-gold/15">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3.5 sm:py-4 flex items-center justify-between gap-2">
-      <a href="index.html" class="font-serif text-xl sm:text-3xl tracking-wider text-bone flex items-center gap-1.5 sm:gap-2 shrink-0">
+  <!-- NAVBAR RESPONSIVE -->
+  <header class="fixed top-0 inset-x-0 z-50 bg-obsidian/95 backdrop-blur-lg border-b border-gold/15">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 h-16 sm:h-20 flex items-center justify-between gap-2">
+      <a href="index.html" class="font-serif text-xl sm:text-3xl tracking-wide sm:tracking-wider text-bone flex items-center gap-1.5 shrink-0">
         <span class="text-gold">✦</span> IÑIGO
       </a>
 
-      <nav class="flex items-center gap-3 sm:gap-7 text-[11px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.2em] min-w-0">
+      <!-- Navegación en escritorio -->
+      <nav class="hidden md:flex items-center gap-7 text-xs uppercase tracking-[0.2em]">
         <a href="index.html" data-i18n="nav.home" class="text-gold border-b border-gold pb-0.5 transition-colors whitespace-nowrap">Inicio</a>
         <a href="shows.html" data-i18n="nav.showsPage" class="text-lavender hover:text-gold transition-colors whitespace-nowrap">Shows</a>
-        <a href="#eventos-potenciar" data-i18n="nav.services" class="hidden md:inline text-lavender hover:text-gold transition-colors whitespace-nowrap">Eventos</a>
+        <a href="#eventos-potenciar" data-i18n="nav.services" class="text-lavender hover:text-gold transition-colors whitespace-nowrap">Eventos</a>
         <a href="#contacto" data-i18n="nav.contact" class="text-lavender hover:text-gold transition-colors whitespace-nowrap">Contacto</a>
       </nav>
 
-      <div class="flex items-center gap-1.5 sm:gap-3 shrink-0">
+      <!-- Acciones compactas y adaptables en móvil y escritorio -->
+      <div class="flex items-center gap-2 shrink-0">
         <button type="button" onclick="toggleLanguage()" id="lang-btn"
-                class="border border-lavender/30 text-lavender hover:text-gold hover:border-gold px-2 sm:px-3 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-wider transition-colors rounded-sm cursor-pointer">
+                class="min-h-[36px] sm:min-h-[40px] border border-lavender/35 text-lavender hover:text-gold hover:border-gold px-2.5 sm:px-3 py-1.5 text-[10px] sm:text-xs uppercase tracking-wider transition-colors rounded-sm cursor-pointer">
           EN / ES
         </button>
         <a href="shows.html" data-i18n="nav.exploreShows"
-           class="border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all duration-300 px-2.5 sm:px-4 py-1.5 sm:py-2 text-[10px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.18em] font-medium rounded-sm whitespace-nowrap">
+           class="min-h-[36px] sm:min-h-[40px] inline-flex items-center justify-center border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all duration-300 px-3 sm:px-4 py-1.5 text-[10px] sm:text-xs uppercase tracking-wider sm:tracking-[0.16em] font-medium rounded-sm whitespace-nowrap">
           Ver Shows
         </a>
+        <button type="button" onclick="toggleMobileMenu()" aria-label="Menú"
+                class="md:hidden min-h-[36px] min-w-[36px] inline-flex items-center justify-center border border-gold/30 text-bone hover:border-gold hover:text-gold rounded-sm cursor-pointer">
+          <svg id="mobile-menu-icon" class="w-5 h-5" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M4 7h16M4 12h16M4 17h16" />
+          </svg>
+        </button>
       </div>
+    </div>
+
+    <!-- Menú desplegable en móvil -->
+    <div id="mobile-menu" class="hidden md:hidden border-t border-gold/15 bg-obsidian/98 px-4 py-4 space-y-2 text-xs uppercase tracking-[0.16em]">
+      <a href="index.html" onclick="closeMobileMenu()" data-i18n="nav.home" class="block py-2.5 px-2 text-gold border-b border-gold/10">Inicio</a>
+      <a href="shows.html" onclick="closeMobileMenu()" data-i18n="nav.showsPage" class="block py-2.5 px-2 text-lavender hover:text-gold border-b border-gold/10">Shows</a>
+      <a href="#eventos-potenciar" onclick="closeMobileMenu()" data-i18n="nav.services" class="block py-2.5 px-2 text-lavender hover:text-gold border-b border-gold/10">Eventos</a>
+      <a href="#contacto" onclick="closeMobileMenu()" data-i18n="nav.contact" class="block py-2.5 px-2 text-lavender hover:text-gold">Contacto</a>
     </div>
   </header>
 
   <!-- 1. PORTADA: TEXTO Y FOTO -->
-  <section class="relative pt-24 pb-16 sm:pt-32 sm:pb-24 md:pt-40 md:pb-28 theater-glow">
+  <section class="relative pt-24 pb-12 sm:pt-32 sm:pb-20 md:pt-40 md:pb-24 theater-glow">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
       
-      <div class="lg:col-span-7 space-y-5 sm:space-y-7 text-center lg:text-left min-w-0">
-        <div data-i18n="hero.badge" class="inline-block border border-gold/40 bg-theater/20 px-3.5 sm:px-4 py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
+      <div class="lg:col-span-7 space-y-4 sm:space-y-6 text-center lg:text-left min-w-0">
+        <div data-i18n="hero.badge" class="inline-block border border-gold/40 bg-theater/20 px-3 py-1.5 rounded-full text-[10px] sm:text-xs uppercase tracking-[0.16em] sm:tracking-[0.22em] text-gold">
           Ilusionista &amp; Burbujólogo
         </div>
 
-        <h1 class="font-serif text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-normal leading-[1.1] text-bone break-words">
+        <h1 class="font-serif text-[2rem] leading-[1.12] sm:text-5xl md:text-6xl lg:text-7xl font-normal text-bone break-words">
           <span data-i18n="hero.titlePart1">“La magia es un arte que nos permite </span><span data-i18n="hero.titleAccent" class="italic text-gold">sentir lo imposible</span><span data-i18n="hero.titlePart2">”</span>
         </h1>
 
         <p data-i18n="hero.subtitle" class="text-lavender text-sm sm:text-base md:text-lg max-w-2xl mx-auto lg:mx-0 font-light leading-relaxed">
-          Magia, ilusionismo y arte de las burbujas para eventos, escenarios y experiencias especiales.
+          Magia, ilusionismo y burbulogía para eventos, escenarios y experiencias especiales.
         </p>
 
-        <div class="pt-1 sm:pt-2 flex flex-col sm:flex-row gap-3.5 sm:gap-4 justify-center lg:justify-start">
+        <div class="pt-2 flex flex-col sm:flex-row gap-3 sm:gap-4 w-full sm:w-auto justify-center lg:justify-start">
           <a href="shows.html" data-i18n="hero.btnShowsPage"
-             class="w-full sm:w-auto bg-gold text-obsidian hover:bg-gold/90 transition-all duration-300 px-6 sm:px-8 py-3.5 sm:py-4 text-xs uppercase tracking-[0.18em] font-semibold rounded-sm shadow-lg shadow-gold/10 inline-flex items-center justify-center">
+             class="min-h-[46px] w-full sm:w-auto bg-gold text-obsidian hover:bg-gold/90 transition-all duration-300 px-6 sm:px-8 py-3.5 text-xs uppercase tracking-[0.15em] font-semibold rounded-sm shadow-lg shadow-gold/10 inline-flex items-center justify-center">
             Ir a Shows →
           </a>
           <button type="button" onclick="cotizarWhatsApp('Consulta general')" data-i18n="hero.btnWhatsApp"
-                  class="w-full sm:w-auto border border-lavender/30 hover:border-gold text-bone px-6 sm:px-8 py-3.5 sm:py-4 text-xs uppercase tracking-[0.18em] transition-colors rounded-sm cursor-pointer">
+                  class="min-h-[46px] w-full sm:w-auto border border-lavender/35 hover:border-gold text-bone px-6 sm:px-8 py-3.5 text-xs uppercase tracking-[0.15em] transition-colors rounded-sm cursor-pointer inline-flex items-center justify-center">
             Cotizar por WhatsApp
           </button>
         </div>
       </div>
 
-      <div class="lg:col-span-5 min-w-0">
-        <div class="relative aspect-[4/5] w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-none mx-auto rounded-sm overflow-hidden border border-gold/30 bg-theater/20 shadow-2xl group">
+      <div class="lg:col-span-5 min-w-0 w-full">
+        <div class="relative aspect-[4/5] w-full max-w-[290px] sm:max-w-sm md:max-w-md lg:max-w-none mx-auto rounded-sm overflow-hidden border border-gold/30 bg-theater/20 shadow-2xl group">
           <img id="hero-img" src="img/fotoPrincipal.png" alt="Iñigo en escena"
                class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-700" />
           <div class="absolute inset-0 bg-gradient-to-t from-obsidian via-transparent to-transparent opacity-60 pointer-events-none"></div>
@@ -115,60 +131,60 @@
   </section>
 
   <!-- 2. SOBRE IÑIGO + 2.1. QUÉ HACE DIFERENTE MI TRABAJO -->
-  <section id="sobre-inigo" class="py-20 sm:py-28 border-t border-gold/15 max-w-5xl mx-auto px-4 sm:px-6">
-    <div class="space-y-6 sm:space-y-8 min-w-0">
-      <div class="space-y-2">
-        <span data-i18n="about.badge" class="inline-block text-xs uppercase tracking-[0.28em] text-gold">
+  <section id="sobre-inigo" class="py-14 sm:py-24 border-t border-gold/15 max-w-5xl mx-auto px-4 sm:px-6">
+    <div class="space-y-5 sm:space-y-7 min-w-0">
+      <div class="space-y-1.5">
+        <span data-i18n="about.badge" class="inline-block text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">
           Trayectoria Artística
         </span>
-        <h2 data-i18n="about.title" class="font-serif text-4xl sm:text-5xl md:text-6xl text-bone leading-[1.08]">
+        <h2 data-i18n="about.title" class="font-serif text-3xl sm:text-5xl md:text-6xl text-bone leading-[1.1]">
           Sobre Iñigo
         </h2>
       </div>
 
-      <div class="space-y-5 sm:space-y-6 text-lavender font-light text-base sm:text-lg md:text-xl leading-relaxed sm:leading-[1.8]">
+      <div class="space-y-4 sm:space-y-5 text-lavender font-light text-sm sm:text-lg md:text-xl leading-relaxed sm:leading-[1.8]">
         <p data-i18n="about.p1">...</p>
         <p data-i18n="about.p2">...</p>
       </div>
 
       <blockquote data-i18n="about.quote"
-                  class="border-l-2 border-gold pl-5 sm:pl-7 py-2 font-serif italic text-xl sm:text-2xl md:text-3xl text-bone leading-snug">
+                  class="border-l-2 border-gold pl-4 sm:pl-7 py-1.5 font-serif italic text-lg sm:text-2xl md:text-3xl text-bone leading-snug">
         ...
       </blockquote>
 
-      <div class="pt-2">
+      <div class="pt-1">
         <a href="shows.html" data-i18n="about.ctaShows"
-           class="w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all px-7 py-3.5 text-xs uppercase tracking-[0.2em] font-medium rounded-sm">
+           class="min-h-[46px] w-full sm:w-auto inline-flex items-center justify-center gap-2 border border-gold text-gold hover:bg-gold hover:text-obsidian transition-all px-6 sm:px-7 py-3.5 text-xs uppercase tracking-[0.15em] font-medium rounded-sm">
           Explorar Catálogo de Shows →
         </a>
       </div>
     </div>
 
     <!-- 2.1. ¿QUÉ HACE DIFERENTE MI TRABAJO? -->
-    <div id="que-hace-diferente" class="mt-16 sm:mt-20 pt-12 sm:pt-14 border-t border-gold/20 min-w-0">
-      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-8 sm:mb-10">
+    <div id="que-hace-diferente" class="mt-12 sm:mt-20 pt-10 sm:pt-14 border-t border-gold/20 min-w-0">
+      <div class="flex flex-col sm:flex-row sm:items-end justify-between gap-2 mb-6 sm:mb-10">
         <div>
-          <span class="text-[11px] uppercase tracking-[0.25em] text-lavender/80">2.1</span>
-          <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl sm:text-3xl md:text-4xl text-gold mt-1">
+          <span class="text-[10px] sm:text-xs uppercase tracking-[0.22em] text-lavender/80">2.1</span>
+          <h3 data-i18n="about.pillarsTitle" class="font-serif text-2xl sm:text-3xl md:text-4xl text-gold mt-0.5 leading-snug">
             ¿Qué hace diferente mi trabajo?
           </h3>
         </div>
         <div class="h-px flex-1 bg-gold/15 hidden md:block ml-6 mb-2"></div>
       </div>
 
-      <ul id="pillars-list" class="grid grid-cols-1 md:grid-cols-2 gap-5 sm:gap-6">
+      <ul id="pillars-list" class="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
         <!-- Inyectado desde i18n.js -->
       </ul>
     </div>
   </section>
 
   <!-- 3. VIDEOS DESTACADOS -->
-  <section id="videos-carrusel" class="py-16 sm:py-24 border-t border-gold/15">
+  <section id="videos-carrusel" class="py-14 sm:py-24 border-t border-gold/15">
     <div class="max-w-5xl mx-auto px-4 sm:px-6 min-w-0">
-      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-12">
-        <span data-i18n="carousel.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">En Escena</span>
-        <h2 data-i18n="carousel.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-2 sm:mt-3 text-bone">Videos Destacados</h2>
-        <p data-i18n="carousel.accompaniment" class="text-bone font-serif italic text-2xl sm:text-3xl md:text-4xl leading-snug mt-3">
+      <div class="text-center max-w-2xl mx-auto mb-7 sm:mb-12">
+        <span data-i18n="carousel.badge" class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">En Escena</span>
+        <h2 data-i18n="carousel.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-1.5 sm:mt-3 text-bone">Videos Destacados</h2>
+        <p data-i18n="carousel.accompaniment" class="text-bone font-serif italic text-xl sm:text-3xl md:text-4xl leading-snug mt-2.5">
           Magia que sorprende y conecta.
         </p>
       </div>
@@ -179,18 +195,18 @@
         </div>
 
         <!-- Controles Anterior / Siguiente + Indicadores -->
-        <div class="mt-4 sm:mt-5 flex items-center justify-between gap-2 sm:gap-4">
+        <div class="mt-4 sm:mt-5 flex flex-wrap sm:flex-nowrap items-center justify-between gap-3">
           <button type="button" onclick="prevVideoSlide()" data-i18n="carousel.prev"
-                  class="border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.18em] rounded-sm cursor-pointer shrink-0">
+                  class="min-h-[42px] flex-1 sm:flex-initial border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-3 sm:px-4 py-2 text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-[0.16em] rounded-sm cursor-pointer">
             ← Anterior
           </button>
 
-          <div id="youtube-carousel-dots" class="flex items-center gap-2 sm:gap-3">
+          <div id="youtube-carousel-dots" class="order-3 sm:order-none w-full sm:w-auto flex items-center justify-center gap-2.5 pt-1 sm:pt-0">
             <!-- Indicadores renderizados por app.js -->
           </div>
 
           <button type="button" onclick="nextVideoSlide()" data-i18n="carousel.next"
-                  class="border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-3 sm:px-4 py-2 sm:py-2.5 text-[11px] sm:text-xs uppercase tracking-[0.14em] sm:tracking-[0.18em] rounded-sm cursor-pointer shrink-0">
+                  class="min-h-[42px] flex-1 sm:flex-initial border border-gold/40 text-gold hover:bg-gold hover:text-obsidian transition-colors px-3 sm:px-4 py-2 text-[11px] sm:text-xs uppercase tracking-wider sm:tracking-[0.16em] rounded-sm cursor-pointer">
             Siguiente →
           </button>
         </div>
@@ -199,14 +215,14 @@
   </section>
 
   <!-- 4. EVENTOS QUE PODEMOS POTENCIAR -->
-  <section id="eventos-potenciar" class="py-16 sm:py-24 border-y border-gold/15 bg-theater/10">
+  <section id="eventos-potenciar" class="py-14 sm:py-24 border-y border-gold/15 bg-theater/10">
     <div class="max-w-7xl mx-auto px-4 sm:px-6">
-      <div class="text-center max-w-2xl mx-auto mb-10 sm:mb-16">
-        <span data-i18n="services.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">Adaptabilidad Escénica</span>
-        <h2 data-i18n="services.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-2 sm:mt-3 text-bone">Eventos que podemos potenciar</h2>
+      <div class="text-center max-w-2xl mx-auto mb-8 sm:mb-14">
+        <span data-i18n="services.badge" class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">Adaptabilidad Escénica</span>
+        <h2 data-i18n="services.title" class="font-serif text-3xl sm:text-4xl md:text-5xl mt-1.5 sm:mt-3 text-bone">Eventos que podemos potenciar</h2>
       </div>
 
-      <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5 sm:gap-6">
+      <div id="services-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         <!-- Inyectado desde i18n.js -->
       </div>
     </div>
@@ -237,56 +253,56 @@
     </div>
   </section>
 
-  <!-- CONTACTO Y COTIZACIONES (AL FINAL DE INICIO) -->
-  <section id="contacto" class="py-16 sm:py-24 theater-glow">
+  <!-- CONTACTO Y COTIZACIONES -->
+  <section id="contacto" class="py-14 sm:py-24 theater-glow">
     <div class="max-w-5xl mx-auto px-4 sm:px-6">
-      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-center">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:gap-12 items-start lg:items-center">
         
-        <div class="lg:col-span-5 space-y-5 sm:space-y-6 min-w-0">
-          <span data-i18n="contact.badge" class="text-[11px] sm:text-xs uppercase tracking-[0.25em] text-gold">Reserva tu Fecha</span>
-          <h2 data-i18n="contact.title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-bone">Lleva lo Imposible a tu Evento</h2>
+        <div class="lg:col-span-5 space-y-4 sm:space-y-6 min-w-0">
+          <span data-i18n="contact.badge" class="text-[10px] sm:text-xs uppercase tracking-[0.2em] sm:tracking-[0.25em] text-gold">Reserva tu Fecha</span>
+          <h2 data-i18n="contact.title" class="font-serif text-3xl sm:text-4xl md:text-5xl text-bone leading-tight">Lleva lo Imposible a tu Evento</h2>
           <p data-i18n="contact.desc" class="text-lavender font-light text-sm sm:text-base leading-relaxed">...</p>
-          <div class="border-t border-gold/20 pt-5 sm:pt-6 space-y-3 text-sm text-bone">
-            <p class="flex items-start sm:items-center gap-3"><span class="text-gold shrink-0">✦</span><span data-i18n="contact.coverage1">Disponibles en toda Colombia.</span></p>
-            <p class="flex items-start sm:items-center gap-3"><span class="text-gold shrink-0">✦</span><span data-i18n="contact.coverage2">Disponibles para giras y festivales internacionales.</span></p>
+          <div class="border-t border-gold/20 pt-4 sm:pt-6 space-y-2.5 text-xs sm:text-sm text-bone">
+            <p class="flex items-start gap-2.5"><span class="text-gold shrink-0">✦</span><span data-i18n="contact.coverage1">Disponibles en toda Colombia.</span></p>
+            <p class="flex items-start gap-2.5"><span class="text-gold shrink-0">✦</span><span data-i18n="contact.coverage2">Disponibles para giras y festivales internacionales.</span></p>
           </div>
         </div>
 
-        <div class="lg:col-span-7 border border-gold/30 bg-obsidian/90 p-5 sm:p-8 md:p-10 rounded-sm shadow-2xl min-w-0">
+        <div class="lg:col-span-7 border border-gold/30 bg-obsidian/90 p-4 sm:p-8 md:p-10 rounded-sm shadow-2xl min-w-0 w-full">
           <form id="quote-form" onsubmit="enviarFormularioWhatsApp(event)" class="space-y-4 sm:space-y-5">
             <div>
-              <label data-i18n="contact.labelName" for="nombre" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Tu Nombre</label>
+              <label data-i18n="contact.labelName" for="nombre" class="block text-[11px] sm:text-xs uppercase tracking-[0.14em] text-lavender mb-1.5 sm:mb-2">Tu Nombre</label>
               <input type="text" id="nombre" required data-i18n-placeholder="contact.placeholderName" placeholder="Ej: Sofía Morales"
-                     class="w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-3 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
+                     class="min-h-[44px] w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-2.5 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div class="min-w-0">
-                <label data-i18n="contact.labelEventType" for="tipo-evento" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Tipo de Evento</label>
-                <select id="tipo-evento" required class="w-full min-w-0 bg-obsidian border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-3 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm"></select>
+                <label data-i18n="contact.labelEventType" for="tipo-evento" class="block text-[11px] sm:text-xs uppercase tracking-[0.14em] text-lavender mb-1.5 sm:mb-2">Tipo de Evento</label>
+                <select id="tipo-evento" required class="min-h-[44px] w-full min-w-0 bg-obsidian border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-2.5 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm"></select>
               </div>
 
               <div class="min-w-0">
-                <label data-i18n="contact.labelShow" for="show-interes" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Show de Interés</label>
-                <select id="show-interes" required class="w-full min-w-0 bg-obsidian border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-3 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm"></select>
+                <label data-i18n="contact.labelShow" for="show-interes" class="block text-[11px] sm:text-xs uppercase tracking-[0.14em] text-lavender mb-1.5 sm:mb-2">Show de Interés</label>
+                <select id="show-interes" required class="min-h-[44px] w-full min-w-0 bg-obsidian border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-2.5 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm"></select>
               </div>
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-5">
               <div class="min-w-0">
-                <label data-i18n="contact.labelCity" for="ciudad" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Ciudad / País</label>
+                <label data-i18n="contact.labelCity" for="ciudad" class="block text-[11px] sm:text-xs uppercase tracking-[0.14em] text-lavender mb-1.5 sm:mb-2">Ciudad / País</label>
                 <input type="text" id="ciudad" required data-i18n-placeholder="contact.placeholderCity" placeholder="Ej: Bogotá, Medellín, Madrid..."
-                       class="w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-3 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
+                       class="min-h-[44px] w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-2.5 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
               </div>
 
               <div class="min-w-0">
-                <label data-i18n="contact.labelDate" for="fecha" class="block text-xs uppercase tracking-[0.15em] text-lavender mb-2">Fecha Tentativa</label>
-                <input type="date" id="fecha" required class="w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-3 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
+                <label data-i18n="contact.labelDate" for="fecha" class="block text-[11px] sm:text-xs uppercase tracking-[0.14em] text-lavender mb-1.5 sm:mb-2">Fecha Tentativa</label>
+                <input type="date" id="fecha" required class="min-h-[44px] w-full min-w-0 bg-theater/15 border border-lavender/20 focus:border-gold px-3.5 sm:px-4 py-2.5 text-sm sm:text-base text-bone outline-none transition-colors rounded-sm" />
               </div>
             </div>
 
             <button type="submit" data-i18n="contact.btnSubmit"
-                    class="w-full bg-gold text-obsidian hover:bg-gold/90 transition-all py-3.5 sm:py-4 text-xs uppercase tracking-[0.18em] font-semibold rounded-sm cursor-pointer mt-2">
+                    class="min-h-[48px] w-full bg-gold text-obsidian hover:bg-gold/90 transition-all py-3.5 px-4 text-xs uppercase tracking-[0.15em] font-semibold rounded-sm cursor-pointer mt-2 inline-flex items-center justify-center">
               Enviar Cotización por WhatsApp →
             </button>
           </form>
@@ -297,27 +313,15 @@
   </section>
 
   <!-- FOOTER CON NAVEGACIÓN ENTRE PÁGINAS -->
-  <footer class="border-t border-gold/15 py-8 sm:py-10 text-center text-[11px] sm:text-xs tracking-[0.18em] uppercase text-lavender px-4 space-y-4">
-    <div class="flex flex-wrap justify-center gap-5 sm:gap-6">
+  <footer class="border-t border-gold/15 py-8 sm:py-10 text-center text-[11px] sm:text-xs tracking-[0.14em] sm:tracking-[0.18em] uppercase text-lavender px-4 space-y-4">
+    <div class="flex flex-wrap justify-center gap-x-5 gap-y-2.5">
       <a href="index.html" data-i18n="nav.home" class="hover:text-gold transition-colors">Inicio</a>
       <a href="shows.html" data-i18n="nav.showsPage" class="hover:text-gold transition-colors">Shows</a>
       <a href="#eventos-potenciar" data-i18n="nav.services" class="hover:text-gold transition-colors">Eventos</a>
       <a href="#contacto" data-i18n="nav.contact" class="hover:text-gold transition-colors">Contacto</a>
     </div>
-    <p data-i18n="footer">© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados</p>
+    <p data-i18n="footer" class="leading-relaxed">© 2026 Iñigo · Ilusionista y Burbujólogo · Todos los derechos reservados</p>
   </footer>
-
-  <!-- LIGHTBOX (COMENTADO JUNTO CON LA GALERÍA A FUTURO)
-  <div id="lightbox-modal" onclick="closeLightbox()" class="fixed inset-0 z-50 hidden bg-obsidian/95 backdrop-blur-md items-center justify-center p-4 sm:p-6">
-    <div class="relative max-w-4xl w-full text-center" onclick="event.stopPropagation()">
-      <button type="button" data-i18n="lightboxClose" onclick="closeLightbox()" class="absolute -top-10 right-0 text-gold text-xs sm:text-sm uppercase tracking-widest hover:underline cursor-pointer">
-        Cerrar [✕]
-      </button>
-      <img id="lightbox-img" src="" alt="Vista ampliada" class="max-h-[75vh] sm:max-h-[80vh] max-w-full mx-auto border border-gold/40 rounded-sm shadow-2xl" />
-      <p id="lightbox-caption" class="font-serif italic text-lg sm:text-xl text-bone mt-4"></p>
-    </div>
-  </div>
-  -->
 
   <script src="i18n.js"></script>
   <script src="app.js"></script>
